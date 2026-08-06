@@ -2,21 +2,14 @@ using System;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class CardSelectionManager : MonoBehaviour
+public class CardSelectionManager : Singleton<CardSelectionManager>
 {
-    public static CardSelectionManager Instance { get; private set; }
-
     private TrapCardUI selectedCard;
     private readonly Dictionary<TrapCardData, TrapCardUI> cardsByData = new Dictionary<TrapCardData, TrapCardUI>();
 
     public bool HasCardSelected => selectedCard != null;
 
     public event Action<TrapCardData> OnCardSelected;
-
-    private void Awake()
-    {
-        Instance = this;
-    }
 
     public void RegisterCard(TrapCardUI card)
     {

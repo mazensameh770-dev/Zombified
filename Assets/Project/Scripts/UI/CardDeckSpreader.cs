@@ -9,6 +9,11 @@ public class CardDeckSpreader : MonoBehaviour
     [SerializeField] private float spacing = 20f;
     [SerializeField] private float verticalOffset = 40f; 
 
+    [Header("Starting Fan Pose (like a hand of playing cards)")]
+    [SerializeField] private float fanAngleStep = 8f;   
+    [SerializeField] private float fanOffsetStep = 6f;  
+    [SerializeField] private float fanVerticalPosition = 0f; 
+
     [Header("Animation")]
     [SerializeField] private float staggerDelay = 0.08f;   
     [SerializeField] private float moveDuration = 0.35f;   
@@ -19,7 +24,27 @@ public class CardDeckSpreader : MonoBehaviour
 
     private void Start()
     {
-        if (playOnStart) SpreadCards();
+        if (playOnStart) PlayFanReveal();
+    }
+
+    public void PlayFanReveal()
+    {
+        StopAllCoroutines();
+        SetInitialFanPose();
+        StartCoroutine(SpreadRoutine());
+    }
+
+    private void SetInitialFanPose()
+    {
+        int count = cards.Length;
+        float startAngle = -fanAngleStep * (count - 1) / 2f;
+        float startOffset = -fanOffsetStep * (count - 1) / 2f;
+
+        for (int i = 0; i < count; i++)
+        {
+            cards[i].anchoredPosition = new Vector2(startOffset + i * fanOffsetStep, fanVerticalPosition);
+            cards[i].localRotation = Quaternion.Euler(0f, 0f, -(startAngle + i * fanAngleStep));
+        }
     }
 
     public void SpreadCards()
@@ -41,6 +66,7 @@ public class CardDeckSpreader : MonoBehaviour
     private IEnumerator MoveCard(RectTransform card, Vector2 targetPosition)
     {
         Vector2 startPosition = card.anchoredPosition;
+        Quaternion startRotation = card.localRotation;
         float elapsed = 0f;
 
         while (elapsed < moveDuration)
@@ -48,10 +74,12 @@ public class CardDeckSpreader : MonoBehaviour
             elapsed += Time.deltaTime;
             float t = easeCurve.Evaluate(Mathf.Clamp01(elapsed / moveDuration));
             card.anchoredPosition = Vector2.Lerp(startPosition, targetPosition, t);
+            card.localRotation = Quaternion.Slerp(startRotation, Quaternion.identity, t);
             yield return null;
         }
 
         card.anchoredPosition = targetPosition;
+        card.localRotation = Quaternion.identity;
     }
 
     private Vector2[] CalculateRowPositions()

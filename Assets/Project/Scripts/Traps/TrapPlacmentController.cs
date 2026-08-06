@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using UnityEngine;
 
 public class TrapPlacementController : MonoBehaviour
@@ -11,6 +12,14 @@ public class TrapPlacementController : MonoBehaviour
     private TrapCardData selectedTrapData;
     private GameObject ghostInstance;
     private Transform currentHoveredTile;
+
+    private readonly List<IPlacementRule> placementRules = new List<IPlacementRule>();
+
+    private void Awake()
+    {
+        placementRules.Add(new TileNotBlockedRule());
+        placementRules.Add(new TileNotOccupiedRule());
+    }
 
     private void Start()
     {
@@ -54,7 +63,7 @@ public class TrapPlacementController : MonoBehaviour
             if (Input.GetMouseButtonDown(0))
             {
                 GridTileState tileState = currentHoveredTile.GetComponent<GridTileState>();
-                if (tileState == null || tileState.CanPlaceTrap())
+                if (tileState == null || IsPlacementValid(tileState))
                 {
                     PlaceTrapOnCurrentTile();
                 }
@@ -67,10 +76,19 @@ public class TrapPlacementController : MonoBehaviour
         }
     }
 
+    private bool IsPlacementValid(GridTileState tile)
+    {
+        foreach (IPlacementRule rule in placementRules)
+        {
+            if (!rule.IsValid(tile)) return false;
+        }
+        return true;
+    }
+
     public bool IsTileOccupied(Transform tile)
     {
         GridTileState tileState = tile.GetComponent<GridTileState>();
-        return tileState != null && (tileState.isBlocked || tileState.PlacedTrap != null);
+        return tileState != null && !IsPlacementValid(tileState);
     }
 
     private void PlaceTrapOnCurrentTile()

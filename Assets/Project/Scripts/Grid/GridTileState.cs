@@ -8,11 +8,6 @@ public class GridTileState : MonoBehaviour
     public GameObject PlacedTrap { get; private set; }
     public TrapCardData SourceCardData { get; private set; }
 
-    public bool CanPlaceTrap()
-    {
-        return !isBlocked && PlacedTrap == null;
-    }
-
     public void SetPlacedTrap(GameObject trap, TrapCardData sourceCardData)
     {
         PlacedTrap = trap;

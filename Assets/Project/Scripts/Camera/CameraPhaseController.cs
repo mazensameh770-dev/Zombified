@@ -15,6 +15,7 @@ public class CameraPhaseController : MonoBehaviour
 
     [Header("UI To Show/Hide During Setup")]
     [SerializeField] private GameObject cardBarRoot;
+    [SerializeField] private CardDeckSpreader cardDeckSpreader; 
 
     [Header("Phase Buttons")]
     [SerializeField] private GameObject putTrapsButton; 
@@ -49,6 +50,7 @@ public class CameraPhaseController : MonoBehaviour
         {
             SetCardBarVisible(true);
             SetButtonsVisible(putTrapsVisible: false, backVisible: true);
+            cardDeckSpreader?.PlayFanReveal(); 
         });
     }
 
@@ -60,7 +62,7 @@ public class CameraPhaseController : MonoBehaviour
 
         SetCardBarVisible(false);
         SetButtonsVisible(putTrapsVisible: false, backVisible: false); 
-        cardSelectionManager?.ClearSelection(); 
+        cardSelectionManager?.ClearSelection();
 
         StartTransition(isometricViewPoint, onComplete: () =>
         {
