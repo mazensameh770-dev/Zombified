@@ -4,6 +4,6 @@ public class TileNotOccupiedRule : IPlacementRule
 
     public bool IsValid(GridTileState tile)
     {
-        return tile.PlacedTrap == null;
+        return tile.currentObject == null;
     }
 }

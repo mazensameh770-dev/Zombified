@@ -98,7 +98,7 @@ public class TrapPlacementController : MonoBehaviour
         SnapToTileSurface(placedTrap, spawnPosition);
 
         GridTileState tileState = currentHoveredTile.GetComponent<GridTileState>();
-        if (tileState != null) tileState.SetPlacedTrap(placedTrap, selectedTrapData);
+        if (tileState != null) tileState.PlaceObject(placedTrap.GetComponent<GridObject>());
 
         CardSelectionManager.Instance.NotifyTrapPlaced();
     }
