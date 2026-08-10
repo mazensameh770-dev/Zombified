@@ -297,6 +297,7 @@ MonoBehaviour:
     m_PostInfinity: 2
     m_RotationOrder: 4
   cardBarRoot: {fileID: 23160696}
+  cardDeckSpreader: {fileID: 0}
   putTrapsButton: {fileID: 1271976760}
   backButton: {fileID: 1739033489}
   cardSelectionManager: {fileID: 2102315998}
@@ -364,6 +365,9 @@ MonoBehaviour:
   cardWidth: 150
   spacing: 70
   verticalOffset: 80
+  fanAngleStep: 8
+  fanOffsetStep: 6
+  fanVerticalPosition: 0
   staggerDelay: 0.08
   moveDuration: 0.35
   easeCurve:
@@ -736,6 +740,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::GridTileState
   isBlocked: 0
+  neighbors: []
 --- !u!1001 &220044665
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -1000,6 +1005,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::GridTileState
   isBlocked: 0
+  neighbors: []
 --- !u!1 &401673388
 GameObject:
   m_ObjectHideFlags: 0
@@ -1131,7 +1137,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 444166890}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: e8fde77ef44234145921c59def434bef, type: 3}
+  m_Script: {fileID: 11500000, guid: 9352d2ac4c0be7246ae0b3797afadcbb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::TrapPlacementController
   placementCamera: {fileID: 9770762}
@@ -1255,6 +1261,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::GridTileState
   isBlocked: 0
+  neighbors: []
 --- !u!1 &511174780
 GameObject:
   m_ObjectHideFlags: 0
@@ -1410,6 +1417,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::GridTileState
   isBlocked: 0
+  neighbors: []
 --- !u!1 &541218817 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 136156, guid: 28571dc7a9cf7834892025d98a1fbe6a, type: 3}
@@ -1433,6 +1441,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::GridTileState
   isBlocked: 0
+  neighbors: []
 --- !u!1001 &564087739
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -1679,6 +1688,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::GridTileState
   isBlocked: 0
+  neighbors: []
 --- !u!1001 &697742750
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -1805,6 +1815,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::GridTileState
   isBlocked: 0
+  neighbors: []
 --- !u!1 &752111045 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 136156, guid: 28571dc7a9cf7834892025d98a1fbe6a, type: 3}
@@ -1828,6 +1839,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::GridTileState
   isBlocked: 0
+  neighbors: []
 --- !u!1 &767821139
 GameObject:
   m_ObjectHideFlags: 0
@@ -2643,6 +2655,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::GridTileState
   isBlocked: 0
+  neighbors: []
 --- !u!1 &1010643638 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 136156, guid: 28571dc7a9cf7834892025d98a1fbe6a, type: 3}
@@ -2666,6 +2679,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::GridTileState
   isBlocked: 0
+  neighbors: []
 --- !u!224 &1033958550 stripped
 RectTransform:
   m_CorrespondingSourceObject: {fileID: 5373332335238679288, guid: cba9eeb4333b8ae479a60ba3f515f9c8, type: 3}
@@ -2915,6 +2929,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::GridTileState
   isBlocked: 0
+  neighbors: []
 --- !u!1 &1133565847 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 136156, guid: 28571dc7a9cf7834892025d98a1fbe6a, type: 3}
@@ -2938,6 +2953,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::GridTileState
   isBlocked: 0
+  neighbors: []
 --- !u!1 &1151768866 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 136156, guid: 28571dc7a9cf7834892025d98a1fbe6a, type: 3}
@@ -2961,6 +2977,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::GridTileState
   isBlocked: 0
+  neighbors: []
 --- !u!1 &1245194711 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 136156, guid: 28571dc7a9cf7834892025d98a1fbe6a, type: 3}
@@ -2984,6 +3001,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::GridTileState
   isBlocked: 0
+  neighbors: []
 --- !u!1 &1271976760
 GameObject:
   m_ObjectHideFlags: 0
@@ -3140,6 +3158,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::GridTileState
   isBlocked: 0
+  neighbors: []
 --- !u!1 &1319385687 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 136156, guid: 28571dc7a9cf7834892025d98a1fbe6a, type: 3}
@@ -3163,6 +3182,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::GridTileState
   isBlocked: 0
+  neighbors: []
 --- !u!1 &1398346795 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 136156, guid: 28571dc7a9cf7834892025d98a1fbe6a, type: 3}
@@ -3186,6 +3206,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::GridTileState
   isBlocked: 0
+  neighbors: []
 --- !u!1001 &1416550919
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -3353,6 +3374,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::GridTileState
   isBlocked: 0
+  neighbors: []
 --- !u!1 &1538311866
 GameObject:
   m_ObjectHideFlags: 0
@@ -3498,6 +3520,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::GridTileState
   isBlocked: 0
+  neighbors: []
 --- !u!1 &1606756029 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 136156, guid: 28571dc7a9cf7834892025d98a1fbe6a, type: 3}
@@ -3521,6 +3544,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::GridTileState
   isBlocked: 0
+  neighbors: []
 --- !u!1001 &1610676754
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -3641,6 +3665,55 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::GridTileState
   isBlocked: 0
+  neighbors: []
+--- !u!1 &1643955193
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1643955195}
+  - component: {fileID: 1643955194}
+  m_Layer: 0
+  m_Name: GridNeighborsSetup
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &1643955194
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1643955193}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3a7f991a46746cd4e89cdb67307aa585, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::GridNeighborsSetup
+  tileSize: 1
+  tileLayer:
+    serializedVersion: 2
+    m_Bits: 64
+--- !u!4 &1643955195
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1643955193}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0.16483, y: 0.16789, z: 0.15448}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1001 &1662237791
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -3833,6 +3906,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::GridTileState
   isBlocked: 0
+  neighbors: []
 --- !u!1 &1739033489
 GameObject:
   m_ObjectHideFlags: 0
@@ -4117,6 +4191,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::GridTileState
   isBlocked: 0
+  neighbors: []
 --- !u!1 &1893526213 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 136156, guid: 28571dc7a9cf7834892025d98a1fbe6a, type: 3}
@@ -4140,6 +4215,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::GridTileState
   isBlocked: 0
+  neighbors: []
 --- !u!1001 &1916652248
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -4688,7 +4764,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 2102315997}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 865adbd3a936b1e41a284d3d176888a0, type: 3}
+  m_Script: {fileID: 11500000, guid: 43e38b37513586d449bfa52f8f418104, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::CardSelectionManager
 --- !u!4 &2102315999
@@ -4729,6 +4805,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::GridTileState
   isBlocked: 0
+  neighbors: []
 --- !u!1660057539 &9223372036854775807
 SceneRoots:
   m_ObjectHideFlags: 0
@@ -4743,3 +4820,4 @@ SceneRoots:
   - {fileID: 150823220}
   - {fileID: 711014555}
   - {fileID: 1538311868}
+  - {fileID: 1643955195}
