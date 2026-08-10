@@ -5,8 +5,7 @@ public class GridTileState : MonoBehaviour
     [Tooltip("If checked, this tile can NEVER have a trap placed on it, and always shows the red 'not allowed' highlight.")]
     public bool isBlocked = false;
 
-    public GameObject PlacedTrap { get; private set; }
-    public TrapCardData SourceCardData { get; private set; }
+    public GridObject currentObject { get; private set; }
 
     public GridTileState[] neighbors = new GridTileState[4];
 
@@ -30,20 +29,24 @@ public class GridTileState : MonoBehaviour
         return (neighbors != null && neighbors.Length > 3) ? neighbors[3] : null;
     }
 
-    public void SetPlacedTrap(GameObject trap, TrapCardData sourceCardData)
+    //public void SetPlacedTrap(GameObject trap, TrapCardData sourceCardData)
+    public void PlaceObject(GridObject obj)
     {
-        PlacedTrap = trap;
-        SourceCardData = sourceCardData;
+        if (currentObject != null) {
+            if (obj is Soldier && currentObject is Trap) {
+                currentObject.SteppedOn();
+            }
+        }
+        currentObject = obj;
+        currentObject.ObjectPlaced(this);
     }
 
-    public void RemoveTrap()
+    public void RemoveObject()
     {
-        if (PlacedTrap == null) return;
+        if (currentObject == null) return;
 
-        CardSelectionManager.Instance?.RestoreOne(SourceCardData);
-
-        Destroy(PlacedTrap);
-        PlacedTrap = null;
-        SourceCardData = null;
+        currentObject.ObjectRemoved(this);
+        Destroy(currentObject);
+        currentObject = null;
     }
 }
