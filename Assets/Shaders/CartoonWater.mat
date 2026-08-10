@@ -40,10 +40,10 @@ Material:
     m_Floats:
     - _QueueControl: 0
     - _QueueOffset: 0
-    - _RippleDensity: 400
+    - _RippleDensity: 750
     - _RippleSlimness: 5
     - _RippleSpeed: 1
-    - _WaveHeghit: 0.1
+    - _WaveHeghit: 0.005
     - _WaveSpeed: 0.1
     m_Colors:
     - _BaseColor: {r: 0.25490198, g: 0.6627451, b: 1, a: 1}
