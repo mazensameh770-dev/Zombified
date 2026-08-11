@@ -26,7 +26,7 @@ RenderSettings:
   m_AmbientIntensity: 1
   m_AmbientMode: 0
   m_SubtractiveShadowColor: {r: 0.42, g: 0.478, b: 0.627, a: 1}
-  m_SkyboxMaterial: {fileID: 10304, guid: 0000000000000000f000000000000000, type: 0}
+  m_SkyboxMaterial: {fileID: 2100000, guid: e4f4ed048e743d245bb5568498dce5c3, type: 2}
   m_HaloStrength: 0.5
   m_FlareStrength: 1
   m_FlareFadeSpeed: 3
@@ -2294,6 +2294,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::GridTileState
   isBlocked: 0
+  neighbors:
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
 --- !u!1 &179987525
 GameObject:
   m_ObjectHideFlags: 0
@@ -3998,6 +4003,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::GridTileState
   isBlocked: 0
+  neighbors:
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
 --- !u!1 &359200277
 GameObject:
   m_ObjectHideFlags: 0
@@ -5525,6 +5535,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::GridTileState
   isBlocked: 0
+  neighbors:
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
 --- !u!1 &511174780
 GameObject:
   m_ObjectHideFlags: 0
@@ -5860,6 +5875,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::GridTileState
   isBlocked: 0
+  neighbors:
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
 --- !u!1 &538073717
 GameObject:
   m_ObjectHideFlags: 0
@@ -5973,6 +5993,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::GridTileState
   isBlocked: 0
+  neighbors:
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
 --- !u!1001 &564087739
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -7095,6 +7120,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::GridTileState
   isBlocked: 0
+  neighbors:
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
 --- !u!1 &665070351
 GameObject:
   m_ObjectHideFlags: 0
@@ -7773,6 +7803,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::GridTileState
   isBlocked: 0
+  neighbors:
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
 --- !u!1 &737932634
 GameObject:
   m_ObjectHideFlags: 0
@@ -7831,6 +7866,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::GridTileState
   isBlocked: 0
+  neighbors:
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
 --- !u!1 &755098669
 GameObject:
   m_ObjectHideFlags: 0
@@ -11839,6 +11879,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::GridTileState
   isBlocked: 0
+  neighbors:
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
 --- !u!1 &1010643638 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 136156, guid: 28571dc7a9cf7834892025d98a1fbe6a, type: 3}
@@ -11862,6 +11907,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::GridTileState
   isBlocked: 0
+  neighbors:
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
 --- !u!1 &1020376899
 GameObject:
   m_ObjectHideFlags: 0
@@ -13383,6 +13433,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::GridTileState
   isBlocked: 0
+  neighbors:
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
 --- !u!1 &1133565847 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 136156, guid: 28571dc7a9cf7834892025d98a1fbe6a, type: 3}
@@ -13406,6 +13461,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::GridTileState
   isBlocked: 0
+  neighbors:
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
 --- !u!1 &1134625798
 GameObject:
   m_ObjectHideFlags: 0
@@ -13789,6 +13849,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::GridTileState
   isBlocked: 0
+  neighbors:
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
 --- !u!1 &1159052738
 GameObject:
   m_ObjectHideFlags: 0
@@ -14489,6 +14554,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::GridTileState
   isBlocked: 0
+  neighbors:
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
 --- !u!1 &1252584261
 GameObject:
   m_ObjectHideFlags: 0
@@ -15005,6 +15075,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::GridTileState
   isBlocked: 0
+  neighbors:
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
 --- !u!1 &1305565728
 GameObject:
   m_ObjectHideFlags: 0
@@ -15208,6 +15283,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::GridTileState
   isBlocked: 0
+  neighbors:
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
 --- !u!1 &1324990359
 GameObject:
   m_ObjectHideFlags: 0
@@ -15951,6 +16031,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::GridTileState
   isBlocked: 0
+  neighbors:
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
 --- !u!1001 &1416550919
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -16952,6 +17037,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::GridTileState
   isBlocked: 0
+  neighbors:
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
 --- !u!1 &1491217010
 GameObject:
   m_ObjectHideFlags: 0
@@ -18264,6 +18354,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::GridTileState
   isBlocked: 0
+  neighbors:
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
 --- !u!1 &1592513816
 GameObject:
   m_ObjectHideFlags: 0
@@ -18467,6 +18562,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::GridTileState
   isBlocked: 0
+  neighbors:
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
 --- !u!1001 &1610676754
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -18587,6 +18687,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::GridTileState
   isBlocked: 0
+  neighbors:
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
 --- !u!1 &1625988041
 GameObject:
   m_ObjectHideFlags: 0
@@ -19331,6 +19436,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::GridTileState
   isBlocked: 0
+  neighbors:
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
 --- !u!1 &1695216588
 GameObject:
   m_ObjectHideFlags: 0
@@ -21043,6 +21153,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::GridTileState
   isBlocked: 0
+  neighbors:
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
 --- !u!1 &1817924292
 GameObject:
   m_ObjectHideFlags: 0
@@ -21831,6 +21946,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::GridTileState
   isBlocked: 0
+  neighbors:
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
 --- !u!1 &1908760601
 GameObject:
   m_ObjectHideFlags: 0
@@ -24485,6 +24605,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::GridTileState
   isBlocked: 0
+  neighbors:
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
 --- !u!1660057539 &9223372036854775807
 SceneRoots:
   m_ObjectHideFlags: 0
