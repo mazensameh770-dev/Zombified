@@ -1,6 +1,6 @@
 public interface IPlacementRule
 {
-    bool IsValid(GridTileState tile);
+    bool IsValid(GridTile tile);
 
     string FailureReason { get; }
 }

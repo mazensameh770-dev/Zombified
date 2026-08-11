@@ -10,7 +10,7 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 29c9a0f9d30abce40ac531b602b3b5d3, type: 3}
-  m_Name: Barrel
+  m_Name: Landmine
   m_EditorClassIdentifier: Assembly-CSharp::TrapCardData
-  trapName: Barrel
-  trapPrefab: {fileID: 7861449990842201674, guid: bb5350d6256429144abd06a3b0e203a8, type: 3}
+  trapName: Landmine
+  trapPrefab: {fileID: 7654323715671245336, guid: 40c1a38c24e365c4abaafacf24559136, type: 3}

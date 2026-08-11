@@ -62,7 +62,7 @@ public class TrapPlacementController : MonoBehaviour
 
             if (Input.GetMouseButtonDown(0))
             {
-                GridTileState tileState = currentHoveredTile.GetComponent<GridTileState>();
+                GridTile tileState = currentHoveredTile.GetComponent<GridTile>();
                 if (tileState == null || IsPlacementValid(tileState))
                 {
                     PlaceTrapOnCurrentTile();
@@ -76,7 +76,7 @@ public class TrapPlacementController : MonoBehaviour
         }
     }
 
-    private bool IsPlacementValid(GridTileState tile)
+    private bool IsPlacementValid(GridTile tile)
     {
         foreach (IPlacementRule rule in placementRules)
         {
@@ -87,7 +87,7 @@ public class TrapPlacementController : MonoBehaviour
 
     public bool IsTileOccupied(Transform tile)
     {
-        GridTileState tileState = tile.GetComponent<GridTileState>();
+        GridTile tileState = tile.GetComponent<GridTile>();
         return tileState != null && !IsPlacementValid(tileState);
     }
 
@@ -97,7 +97,7 @@ public class TrapPlacementController : MonoBehaviour
         GameObject placedTrap = Instantiate(selectedTrapData.trapPrefab, spawnPosition, Quaternion.identity);
         SnapToTileSurface(placedTrap, spawnPosition);
 
-        GridTileState tileState = currentHoveredTile.GetComponent<GridTileState>();
+        GridTile tileState = currentHoveredTile.GetComponent<GridTile>();
         if (tileState != null) tileState.PlaceObject(placedTrap.GetComponent<GridObject>());
 
         CardSelectionManager.Instance.NotifyTrapPlaced();

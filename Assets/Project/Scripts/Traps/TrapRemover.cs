@@ -9,7 +9,7 @@ public class TrapRemover : MonoBehaviour
     [SerializeField] private RectTransform removeButtonRect;
     [SerializeField] private Button removeButton;
 
-    private GridTileState hoveredTileWithTrap;
+    private GridTile hoveredTileWithTrap;
 
     private void Awake()
     {
@@ -33,9 +33,9 @@ public class TrapRemover : MonoBehaviour
 
         if (Physics.Raycast(ray, out RaycastHit hit, 200f, gridLayerMask))
         {
-            GridTileState tileState = hit.collider.GetComponent<GridTileState>();
+            GridTile tileState = hit.collider.GetComponent<GridTile>();
 
-            if (tileState != null && tileState.currentObject != null)
+            if (tileState != null && tileState.GetCurrentObject() != null)
             {
                 hoveredTileWithTrap = tileState;
                 removeButtonRect.gameObject.SetActive(true);
