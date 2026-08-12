@@ -13,6 +13,4 @@ MonoBehaviour:
   m_Name: Zombified Grid
   m_EditorClassIdentifier: Assembly-CSharp::TrapCardData
   trapName: Zombified_Grid
-  icon: {fileID: 0}
-  trapPrefab: {fileID: 0}
-  maxQuantity: 3
+  trapPrefab: {fileID: 4782773506508070919, guid: b418b884270d6f24197a77ea678525fc, type: 3}

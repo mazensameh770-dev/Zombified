@@ -13,9 +13,13 @@ public class ZombieManager : MonoBehaviour
         }
     }
 
-    public void Zombifying(GridTile tile) {
-        tile.RemoveObject();
-        GameObject zombie = Instantiate(zombiePrefab);
-        tile.PlaceObject(zombie.GetComponent<GridObject>());
+    public void Zombifying(GridTile tile, GridObject soldier) {
+        if (soldier is Soldier) {
+            tile.GetCurrentObject().gameObject.SetActive(false);
+            tile.RemoveObject(false);
+            GameObject zombie = Instantiate(zombiePrefab);
+            tile.PlaceObject(zombie.GetComponent<GridObject>());
+            ((Soldier)soldier).TurnToZombie();
+        }
     }
 }

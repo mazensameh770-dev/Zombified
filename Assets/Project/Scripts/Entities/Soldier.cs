@@ -4,15 +4,40 @@ using UnityEngine;
 
 public class Soldier : GridObject {
 
+    private enum SoldierDirection {
+        Front,
+        Right,
+        Left,
+        Back
+    }
+
+
     [Header("Soldier Settings")]
+    [SerializeField] private SoldierDirection direction;
     [SerializeField] private PathSO myPath;
     [SerializeField] private Animator animator;
     [SerializeField] private GridTile startingTile;
     private int currentActionIndex = 0;
     private bool canMove = true;
+    private bool distracted = false;
 
-    private void Start() {
+    protected override void Start() {
+        base.Start();
         startingTile.PlaceObject(this);
+        switch (direction) {
+            case SoldierDirection.Front:
+                transform.forward = Vector3.forward;
+                break;
+            case SoldierDirection.Right:
+                transform.forward = Vector3.right;
+                break;
+            case SoldierDirection.Left:
+                transform.forward = Vector3.left;
+                break;
+            case SoldierDirection.Back:
+                transform.forward = Vector3.back;
+                break;
+        }
     }
     public override void ObjectPlaced(GridTile tile) {
         base.ObjectPlaced(tile);
@@ -22,17 +47,44 @@ public class Soldier : GridObject {
         base.ObjectRemoved(tile);
     }
 
-    public override void Die() {
+    public override void TakeDamage(int damage) {
         animator.SetTrigger("die");
         canMove = false;
     }
 
-    public override void PlayNextAction() {
+    protected override void PlayNextAction() {
         if (!canMove) return;
         if (currentActionIndex >= myPath.actions.Length) return;
         // check for interruptions within range
+        distracted = false;
+        GridObject.StartSearching(currentGridTile, range, tile => {
+            if (distracted) return;
+            GridObject obj = tile.GetCurrentObject();
+            if (obj is Zombie && ((Zombie)obj).IsAlive()) {
+                ShootZombie(tile);
+                distracted = true;
+            }
+        });
+        //print(distracted);
+        if (distracted) return;
+        // if it is safe. do your action
         ExecuteAction(myPath.actions[currentActionIndex]);
         currentActionIndex++;
+    }
+    protected override void ResetObject() {
+        currentActionIndex = 0;
+        gameObject.SetActive(true);
+        currentGridTile?.RemoveObject(false);
+        startingTile.PlaceObject(this);
+        transform.rotation = Quaternion.Euler(0, 0, 0);
+        if (!canMove) animator.SetTrigger("reset");
+        canMove = true;
+    }
+
+    private void ShootZombie(GridTile targeted) {
+        transform.LookAt(targeted.transform.position);
+        animator.SetTrigger("shoot");
+        targeted.GetCurrentObject().TakeDamage(1);
     }
 
     private void ExecuteAction(ActionType action) {
@@ -93,13 +145,9 @@ public class Soldier : GridObject {
         await Task.Delay(500);
         animator.SetBool("walk", false);
     }
-    public void ResetSoldier() {
-        print("Resetting");
-        currentActionIndex = 0;
-        currentGridTile?.RemoveObject(false);
-        startingTile.PlaceObject(this);
-        transform.rotation = Quaternion.Euler(0, 0, 0);
-        if (!canMove) animator.SetTrigger("reset");
-        canMove = true;
+
+    public void TurnToZombie() {
+        canMove = false;
+        gameObject.SetActive(false);
     }
 }

@@ -39,7 +39,7 @@ public abstract class TrapEffect {
             }
             if ((obj is Soldier) || (obj is Zombie)) {
                 //Debug.Log("Found soldier");
-                obj.Die();
+                obj.TakeDamage(5);
             }
         });
     }
@@ -49,7 +49,7 @@ public abstract class TrapEffect {
 public class Explode : TrapEffect {
 
     public override void Execute(Trap trap, GridObject obj) {
-        obj.Die();
+        obj.TakeDamage(5);
         trap.gameObject.SetActive(false);
         ApplyExplosion(trap);
     }
@@ -84,13 +84,6 @@ public class Lure : TrapEffect {
 [Serializable]
 public class Zombify : TrapEffect {
     public override void Execute(Trap trap, GridObject obj) {
-        // Zombify
-    }
-}
-
-[Serializable]
-public class MultipleUses : TrapEffect {
-    public override void Execute(Trap trap, GridObject obj) {
-        trap.gameObject.SetActive(true);
+        ZombieManager.Instance.Zombifying(trap.GetCurrentTile(), obj);
     }
 }
