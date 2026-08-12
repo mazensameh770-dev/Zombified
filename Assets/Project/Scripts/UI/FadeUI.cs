@@ -1,62 +1,64 @@
 using System.Collections;
 using UnityEngine;
 
+[RequireComponent(typeof(CanvasGroup))]
 public class FadeUI : MonoBehaviour
 {
-    [SerializeField] private CanvasGroup canvasGroup;
-    public float fadeDuration = 0.5f;
+    [SerializeField] private float fadeDuration = 0.25f;
 
-    private Coroutine fadeCoroutine;
+    private CanvasGroup canvasGroup;
+    private Coroutine fadeRoutine;
 
     private void Awake()
     {
-        if (canvasGroup == null)
-            canvasGroup = GetComponent<CanvasGroup>();
+        canvasGroup = GetComponent<CanvasGroup>();
     }
 
-    public void FadeIn()
+    private void OnEnable()
     {
+        canvasGroup.alpha = 0f;
+
         StartFade(1f);
     }
 
-    public void FadeOut()
+    public void Hide()
     {
-        StartFade(0f);
+        StartFade(0f, true);
     }
 
-    private void StartFade(float targetAlpha)
+    private void StartFade(float targetAlpha, bool disableAfter = false)
     {
-        if (fadeCoroutine != null) StopCoroutine(fadeCoroutine);
+        if (fadeRoutine != null)
+            StopCoroutine(fadeRoutine);
 
-        fadeCoroutine = StartCoroutine(Fade(targetAlpha));
+        fadeRoutine = StartCoroutine(Fade(targetAlpha, disableAfter));
     }
 
-    private IEnumerator Fade(float targetAlpha)
+    private IEnumerator Fade(float targetAlpha, bool disableAfter)
     {
-        canvasGroup.interactable = false;
-        canvasGroup.blocksRaycasts = false;
-
         float startAlpha = canvasGroup.alpha;
         float time = 0f;
+
+        canvasGroup.interactable = false;
+        canvasGroup.blocksRaycasts = false;
 
         while (time < fadeDuration)
         {
             time += Time.unscaledDeltaTime;
-
-            float t = time / fadeDuration;
-            canvasGroup.alpha = Mathf.Lerp(startAlpha, targetAlpha, t);
-
+            canvasGroup.alpha = Mathf.Lerp(startAlpha, targetAlpha, time / fadeDuration);
             yield return null;
         }
 
         canvasGroup.alpha = targetAlpha;
 
-        if (targetAlpha == 1f)
+        if (targetAlpha >= 1f)
         {
             canvasGroup.interactable = true;
             canvasGroup.blocksRaycasts = true;
         }
-
-        fadeCoroutine = null;
+        else if (disableAfter)
+        {
+            gameObject.SetActive(false);
+        }
     }
 }

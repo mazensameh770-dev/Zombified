@@ -16,19 +16,9 @@ public class LevelsUI : MonoBehaviour
 
     private void GoBack()
     {
-        fadeUI.FadeOut();
-
-        Invoke(nameof(ShowMainMenu), fadeUI.fadeDuration);
-    }
-
-    private void ShowMainMenu()
-    {
-        gameObject.SetActive(false);
+        fadeUI.Hide();
 
         mainMenuUI.SetActive(true);
-
-        FadeUI mainMenuFade = mainMenuUI.GetComponent<FadeUI>();
-        mainMenuFade.FadeIn();
     }
 
     private void OnDestroy()

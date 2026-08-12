@@ -7,9 +7,11 @@ public class MainMenuUI : MonoBehaviour
     [SerializeField] private Button optionsButton;
     [SerializeField] private Button quitButton;
 
+    [Header("UI")]
     [SerializeField] private GameObject optionsUI;
     [SerializeField] private GameObject levelsUI;
 
+    [Header("Fade")]
     [SerializeField] private FadeUI fadeUI;
 
     private void Start()
@@ -21,36 +23,14 @@ public class MainMenuUI : MonoBehaviour
 
     private void OpenLevels()
     {
-        fadeUI.FadeOut();
-
-        Invoke(nameof(ShowLevels), fadeUI.fadeDuration);
-    }
-
-    private void ShowLevels()
-    {
-        gameObject.SetActive(false);
-
+        fadeUI.Hide();
         levelsUI.SetActive(true);
-
-        FadeUI levelsFade = levelsUI.GetComponent<FadeUI>();
-        levelsFade.FadeIn();
     }
 
     private void OpenOptions()
     {
-        fadeUI.FadeOut();
-
-        Invoke(nameof(ShowOptions), fadeUI.fadeDuration);
-    }
-
-    private void ShowOptions()
-    {
-        gameObject.SetActive(false);
-
+        fadeUI.Hide();
         optionsUI.SetActive(true);
-
-        FadeUI optionsFade = optionsUI.GetComponent<FadeUI>();
-        optionsFade.FadeIn();
     }
 
     private void QuitGame()
@@ -60,6 +40,7 @@ public class MainMenuUI : MonoBehaviour
 
     private void OnDestroy()
     {
+        playButton.onClick.RemoveListener(OpenLevels);
         optionsButton.onClick.RemoveListener(OpenOptions);
         quitButton.onClick.RemoveListener(QuitGame);
     }

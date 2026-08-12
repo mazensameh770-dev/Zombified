@@ -15,7 +15,7 @@ public class OptionsUI : MonoBehaviour
 
     [Header("Navigation")]
     [SerializeField] private Button backButton;
-    [SerializeField] private GameObject mainMenuUI;
+    [SerializeField] private GameObject parentUI;
 
     [Header("Fade")]
     [SerializeField] private FadeUI fadeUI;
@@ -28,7 +28,6 @@ public class OptionsUI : MonoBehaviour
 
     private void Start()
     {
-        // VSync
         vsyncEnabled = PlayerPrefs.GetInt(VSyncKey, 1) == 1;
 
         ApplyVSync();
@@ -36,36 +35,27 @@ public class OptionsUI : MonoBehaviour
 
         vsyncButton.onClick.AddListener(ToggleVSync);
 
-        // Audio
         LoadAudioSettings();
 
         backgroundSlider.onValueChanged.AddListener(SetBackgroundVolume);
         sfxSlider.onValueChanged.AddListener(SetSFXVolume);
 
-        // Navigation
         backButton.onClick.AddListener(GoBack);
     }
 
-    public void Show()
+    private void Update()
     {
-        gameObject.SetActive(true);
-        fadeUI.FadeIn();
+        if (Input.GetKeyDown(KeyCode.Escape))
+        {
+            GoBack();
+        }
     }
 
     private void GoBack()
     {
-        fadeUI.FadeOut();
+        fadeUI.Hide();
 
-        Invoke(nameof(ShowMainMenu), 0.2f);
-    }
-
-    private void ShowMainMenu()
-    {
-        gameObject.SetActive(false);
-        mainMenuUI.SetActive(true);
-
-        FadeUI mainMenuFade = mainMenuUI.GetComponent<FadeUI>();
-        mainMenuFade.FadeIn();
+        parentUI.SetActive(true);
     }
 
     private void ToggleVSync()
@@ -86,16 +76,17 @@ public class OptionsUI : MonoBehaviour
 
     private void UpdateVSyncUI()
     {
-        vsyncButtonImage.sprite = vsyncEnabled ? vsyncOnSprite : vsyncOffSprite;
+        vsyncButtonImage.sprite =
+            vsyncEnabled ? vsyncOnSprite : vsyncOffSprite;
     }
 
     private void LoadAudioSettings()
     {
-        float backgroundVolume = PlayerPrefs.GetFloat(BackgroundVolumeKey, 1f);
-        float sfxVolume = PlayerPrefs.GetFloat(SFXVolumeKey, 1f);
+        backgroundSlider.value =
+            PlayerPrefs.GetFloat(BackgroundVolumeKey, 1f);
 
-        backgroundSlider.value = backgroundVolume;
-        sfxSlider.value = sfxVolume;
+        sfxSlider.value =
+            PlayerPrefs.GetFloat(SFXVolumeKey, 1f);
     }
 
     private void SetBackgroundVolume(float value)
