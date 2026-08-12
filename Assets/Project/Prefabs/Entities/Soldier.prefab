@@ -10255,6 +10255,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Soldier
   range: 4
+  direction: 0
   myPath: {fileID: 11400000, guid: 28431260359faa4459f0838b5b433931, type: 2}
   animator: {fileID: 4788976038785039945}
   startingTile: {fileID: 0}
@@ -10822,7 +10823,7 @@ Animator:
   m_GameObject: {fileID: 8300609881480915889}
   m_Enabled: 1
   m_Avatar: {fileID: 9000000, guid: b3cd04f10b237d54a940306572b58de3, type: 3}
-  m_Controller: {fileID: 9100000, guid: f6f513ba76a753647992b1710949e6b2, type: 2}
+  m_Controller: {fileID: 9100000, guid: fb3ba75221dd54d4dad5e420abc83e87, type: 2}
   m_CullingMode: 1
   m_UpdateMode: 0
   m_ApplyRootMotion: 1

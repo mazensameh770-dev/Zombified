@@ -43,7 +43,7 @@ public class GridTile : MonoBehaviour
                 temp = currentObject;
                 // don't return
             } else if (obj is Zombie && currentObject is Soldier) {
-                ZombieManager.Instance.Zombifying(this);
+                ZombieManager.Instance.Zombifying(this, currentObject);
                 temp = currentObject;
                 // don't return
             }
@@ -67,9 +67,9 @@ public class GridTile : MonoBehaviour
     }
     public void MoveObject(GridTile targetTile)
     {
-        currentObject.ObjectRemoved(this);
         currentObject.transform.DOMove(targetTile.transform.position, 0.5f).SetEase(Ease.Linear).OnComplete(() =>
         {
+            currentObject.ObjectRemoved(this);
             targetTile.PlaceObject(currentObject);
             currentObject = null;
         });

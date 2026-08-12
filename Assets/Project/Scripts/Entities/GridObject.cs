@@ -7,7 +7,16 @@ public abstract class GridObject : MonoBehaviour
     [Header("Grid Object Settings")]
     protected GridTile currentGridTile;
     [SerializeField] protected int range;
-    
+
+    protected virtual void Start() {
+        GameManager.Instance.OnNextTurn += PlayNextAction;
+        GameManager.Instance.OnSimulationEnd += ResetObject;
+    }
+    private void OnDestroy() {
+        GameManager.Instance.OnNextTurn -= PlayNextAction;
+        GameManager.Instance.OnSimulationEnd -= ResetObject;
+    }
+
     public GridTile GetCurrentTile() {
         return currentGridTile;
     }
@@ -18,13 +27,16 @@ public abstract class GridObject : MonoBehaviour
     public virtual void ObjectRemoved(GridTile tile) {
         currentGridTile = null;
     }
-    public virtual void PlayNextAction() {
+    protected virtual void PlayNextAction() {
         // Default implementation does nothing
+    }
+    protected virtual void ResetObject() {
+
     }
     public virtual void SteppedOn(GridObject soldier) {
         // Default implementation does nothing
     }
-    public virtual void Die() {
+    public virtual void TakeDamage(int damage) {
 
     }
 
