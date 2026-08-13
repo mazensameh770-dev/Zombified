@@ -76,7 +76,7 @@ public class Soldier : GridObject {
         gameObject.SetActive(true);
         currentGridTile?.RemoveObject(false);
         startingTile.PlaceObject(this);
-        //transform.rotation = Quaternion.Euler(0, 0, 0);
+        transform.rotation = Quaternion.Euler(0, 0, 0);
         if (!canMove) animator.SetTrigger("reset");
         canMove = true;
     }
@@ -91,15 +91,19 @@ public class Soldier : GridObject {
         switch (action) {
             case ActionType.moveForward:
                 MoveForward();
+                Debug.Log("MoveForward");
                 break;
             case ActionType.moveRight:
                 MoveRight();
+                Debug.Log("MoveRight");
                 break;
             case ActionType.moveLeft:
                 MoveLeft();
+                Debug.Log("MoveLeft");
                 break;
             case ActionType.rotateBack:
                 RotateBack();
+                Debug.Log("RotateBack");
                 break;
             case ActionType.idle:
                 Idle();

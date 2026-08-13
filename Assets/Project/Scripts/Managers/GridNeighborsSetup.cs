@@ -21,23 +21,51 @@ public class GridNeighborsSetup : MonoBehaviour
         }
     }
 
+    //private void SetupNeighborsForTile(GridTile tile)
+    //{
+    //    List<GridTile> neighborList = new List<GridTile>();
+    //    Vector3[] directions = { Vector3.forward, Vector3.back, Vector3.right, Vector3.left };
+
+    //    foreach (Vector3 dir in directions)
+    //    {
+    //        if (Physics.Raycast(tile.transform.position, dir, out RaycastHit hit, tileSize, tileLayer))
+    //        {
+    //            GridTile neighborTile = hit.collider.GetComponent<GridTile>();
+    //            if (neighborTile != null)
+    //            {
+    //                neighborList.Add(neighborTile);
+    //            }
+    //        }
+    //    }
+
+    //    tile.neighbors = neighborList.ToArray();
+    //}
+
     private void SetupNeighborsForTile(GridTile tile)
     {
-        List<GridTile> neighborList = new List<GridTile>();
-        Vector3[] directions = { Vector3.forward, Vector3.back, Vector3.right, Vector3.left };
-
-        foreach (Vector3 dir in directions)
+        Vector3[] directions =
         {
-            if (Physics.Raycast(tile.transform.position, dir, out RaycastHit hit, tileSize, tileLayer))
+        Vector3.forward, // 0 = Front
+        Vector3.back,    // 1 = Back
+        Vector3.right,   // 2 = Right
+        Vector3.left     // 3 = Left
+    };
+
+        GridTile[] neighbors = new GridTile[4];
+
+        for (int i = 0; i < directions.Length; i++)
+        {
+            if (Physics.Raycast(
+                tile.transform.position,
+                directions[i],
+                out RaycastHit hit,
+                tileSize,
+                tileLayer))
             {
-                GridTile neighborTile = hit.collider.GetComponent<GridTile>();
-                if (neighborTile != null)
-                {
-                    neighborList.Add(neighborTile);
-                }
+                neighbors[i] = hit.collider.GetComponent<GridTile>();
             }
         }
 
-        tile.neighbors = neighborList.ToArray();
+        tile.neighbors = neighbors;
     }
 }
