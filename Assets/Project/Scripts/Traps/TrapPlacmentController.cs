@@ -94,7 +94,12 @@ public class TrapPlacementController : MonoBehaviour
     private void PlaceTrapOnCurrentTile()
     {
         Vector3 spawnPosition = GetTileCenter(currentHoveredTile);
-        GameObject placedTrap = Instantiate(selectedTrapData.trapPrefab, spawnPosition, Quaternion.identity);
+
+        GameObject placedTrap = Instantiate(selectedTrapData.trapPrefab,
+                                            spawnPosition,Quaternion.identity,
+                                            GameManager.Instance.CurrentLevelRoot
+                                            );
+
         SnapToTileSurface(placedTrap, spawnPosition);
 
         GridTile tileState = currentHoveredTile.GetComponent<GridTile>();

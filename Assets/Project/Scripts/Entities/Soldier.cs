@@ -76,7 +76,7 @@ public class Soldier : GridObject {
         gameObject.SetActive(true);
         currentGridTile?.RemoveObject(false);
         startingTile.PlaceObject(this);
-        transform.rotation = Quaternion.Euler(0, 0, 0);
+        //transform.rotation = Quaternion.Euler(0, 0, 0);
         if (!canMove) animator.SetTrigger("reset");
         canMove = true;
     }

@@ -73,8 +73,9 @@ public class CameraPhaseController : MonoBehaviour
             Debug.LogWarning($"[CameraPhaseController] Level index {levelIndex} is out of range.");
             return;
         }
-
         currentLevelIndex = levelIndex;
+
+        GameManager.Instance.SetCurrentLevel(levelIndex);
         isInSetupPhase = false;
         IsInSetupPhase = false;
 

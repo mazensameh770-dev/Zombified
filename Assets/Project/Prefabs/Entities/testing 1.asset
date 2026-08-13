@@ -12,5 +12,5 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: dc1f07e3655826344b3add690aa17acd, type: 3}
   m_Name: testing 1
   m_EditorClassIdentifier: Assembly-CSharp::PathSO
-  actionLength: 3
-  actions: 040000000400000004000000
+  actionLength: 4
+  actions: 00000000000000000000000000000000

@@ -29,6 +29,7 @@ public class PauseUI : MonoBehaviour
 
     public void PauseGame()
     {
+        Time.timeScale = 0f;
         gameObject.SetActive(true);
     }
 
@@ -42,6 +43,7 @@ public class PauseUI : MonoBehaviour
 
     private void ResumeGame()
     {
+        Time.timeScale = 1f;
         fadeUI.Hide();
     }
 

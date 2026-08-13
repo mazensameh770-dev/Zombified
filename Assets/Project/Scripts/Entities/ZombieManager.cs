@@ -17,7 +17,9 @@ public class ZombieManager : MonoBehaviour
         if (soldier is Soldier) {
             tile.GetCurrentObject().gameObject.SetActive(false);
             tile.RemoveObject(false);
-            GameObject zombie = Instantiate(zombiePrefab);
+
+            GameObject zombie = Instantiate(zombiePrefab, GameManager.Instance.CurrentLevelRoot);
+
             tile.PlaceObject(zombie.GetComponent<GridObject>());
             ((Soldier)soldier).TurnToZombie();
         }

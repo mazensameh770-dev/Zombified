@@ -269,8 +269,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5ef160194f144c045a6d027655fc1e25, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::CameraPhaseController
-  isometricViewPoint: {fileID: 150823220}
-  setupViewPoint: {fileID: 711014555}
+  levels: []
   transitionDuration: 1.2
   easeCurve:
     serializedVersion: 2
@@ -297,10 +296,14 @@ MonoBehaviour:
     m_PostInfinity: 2
     m_RotationOrder: 4
   cardBarRoot: {fileID: 23160696}
-  cardDeckSpreader: {fileID: 0}
-  putTrapsButton: {fileID: 1271976760}
-  backButton: {fileID: 1739033489}
-  cardSelectionManager: {fileID: 0}
+  cardDeckSpreader: {fileID: 23160698}
+  isometricPhaseButtons: []
+  setupPhaseButtons: []
+  nextLevelButton: {fileID: 0}
+  timeUI: {fileID: 0}
+  starsUI: {fileID: 0}
+  pauseButtonUI: {fileID: 0}
+  cardSelectionManager: {fileID: 2102316000}
 --- !u!1 &23160696
 GameObject:
   m_ObjectHideFlags: 0
@@ -3024,7 +3027,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7474441548106618717, guid: 421318c07ebea3845af49efbf57b77d7, type: 3}
       propertyPath: m_LocalPosition.z
-      value: 0
+      value: 0.244
       objectReference: {fileID: 0}
     - target: {fileID: 7474441548106618717, guid: 421318c07ebea3845af49efbf57b77d7, type: 3}
       propertyPath: m_LocalRotation.w

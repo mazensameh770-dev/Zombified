@@ -16,6 +16,8 @@ public class GridHoverHighlighter : MonoBehaviour
 
     private void Awake()
     {
+        gridCamera = FindAnyObjectByType<Camera>();
+        placementController = FindAnyObjectByType<TrapPlacementController>();
         BuildOverlay();
     }
 

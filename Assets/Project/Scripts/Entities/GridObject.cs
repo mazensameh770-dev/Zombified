@@ -8,13 +8,22 @@ public abstract class GridObject : MonoBehaviour
     protected GridTile currentGridTile;
     [SerializeField] protected int range;
 
-    protected virtual void Start() {
-        GameManager.Instance.OnNextTurn += PlayNextAction;
-        GameManager.Instance.OnSimulationEnd += ResetObject;
+    protected virtual void Start()
+    {
     }
-    private void OnDestroy() {
-        GameManager.Instance.OnNextTurn -= PlayNextAction;
-        GameManager.Instance.OnSimulationEnd -= ResetObject;
+    //private void OnDestroy() {
+    //    GameManager.Instance.OnNextTurn -= PlayNextAction;
+    //    GameManager.Instance.OnSimulationEnd -= ResetObject;
+    //}
+
+    public void PlayTurn()
+    {
+        PlayNextAction();
+    }
+
+    public void ResetForLevel()
+    {
+        ResetObject();
     }
 
     public GridTile GetCurrentTile() {
