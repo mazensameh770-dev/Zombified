@@ -4,11 +4,9 @@ using UnityEngine.UI;
 public class MainMenuUI : MonoBehaviour
 {
     [SerializeField] private Button playButton;
-    [SerializeField] private Button settingsButton;
+    [SerializeField] private Button optionsButton;
     [SerializeField] private Button quitButton;
 
-<<<<<<< Updated upstream
-=======
     [Header("UI")]
     [SerializeField] private OptionsUI optionsUI;
     [SerializeField] private GameObject levelsUI;
@@ -16,15 +14,12 @@ public class MainMenuUI : MonoBehaviour
     [Header("Fade")]
     [SerializeField] private FadeUI fadeUI;
 
->>>>>>> Stashed changes
     private void Start()
     {
-
+        playButton.onClick.AddListener(OpenLevels);
+        optionsButton.onClick.AddListener(OpenOptions);
         quitButton.onClick.AddListener(QuitGame);
     }
-
-<<<<<<< Updated upstream
-=======
     private void OpenLevels()
     {
         fadeUI.Hide();
@@ -37,9 +32,15 @@ public class MainMenuUI : MonoBehaviour
         optionsUI.Open(gameObject);
     }
 
->>>>>>> Stashed changes
     private void QuitGame()
     {
         Application.Quit();
+    }
+
+    private void OnDestroy()
+    {
+        playButton.onClick.RemoveListener(OpenLevels);
+        optionsButton.onClick.RemoveListener(OpenOptions);
+        quitButton.onClick.RemoveListener(QuitGame);
     }
 }
