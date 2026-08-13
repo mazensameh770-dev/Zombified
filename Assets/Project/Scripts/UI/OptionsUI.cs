@@ -15,7 +15,7 @@ public class OptionsUI : MonoBehaviour
 
     [Header("Navigation")]
     [SerializeField] private Button backButton;
-    [SerializeField] private GameObject parentUI;
+    [SerializeField] private GameObject parentUI; 
 
     [Header("Fade")]
     [SerializeField] private FadeUI fadeUI;
@@ -51,11 +51,17 @@ public class OptionsUI : MonoBehaviour
         }
     }
 
+    public void Open(GameObject caller)
+    {
+        parentUI = caller;
+        gameObject.SetActive(true);
+    }
+
     private void GoBack()
     {
         fadeUI.Hide();
 
-        parentUI.SetActive(true);
+        if (parentUI != null) parentUI.SetActive(true);
     }
 
     private void ToggleVSync()

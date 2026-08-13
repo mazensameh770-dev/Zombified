@@ -1,6 +1,5 @@
 using UnityEngine;
 using UnityEngine.UI;
-using UnityEngine.SceneManagement;
 
 public class PauseUI : MonoBehaviour
 {
@@ -10,7 +9,11 @@ public class PauseUI : MonoBehaviour
     [SerializeField] private Button mainMenuButton;
 
     [Header("UI")]
-    [SerializeField] private GameObject optionsUI;
+    [SerializeField] private OptionsUI optionsUI;
+    [SerializeField] private GameObject mainMenuUI;
+
+    [Header("References")]
+    [SerializeField] private CameraPhaseController cameraPhaseController;
 
     [Header("Fade")]
     [SerializeField] private FadeUI fadeUI;
@@ -30,7 +33,8 @@ public class PauseUI : MonoBehaviour
 
     private void Update()
     {
-        if (Input.GetKeyDown(KeyCode.Escape)){
+        if (Input.GetKeyDown(KeyCode.Escape))
+        {
             ResumeGame();
         }
     }
@@ -44,13 +48,15 @@ public class PauseUI : MonoBehaviour
     {
         fadeUI.Hide();
 
-        optionsUI.SetActive(true);
+        optionsUI.Open(gameObject);
     }
 
     private void ReturnToMainMenu()
     {
         Time.timeScale = 1f;
-        SceneManager.LoadScene("MainMenuScene");
+        fadeUI.Hide();
+        cameraPhaseController.ReturnToMainMenuView();
+        mainMenuUI.SetActive(true);
     }
 
     private void OnDestroy()

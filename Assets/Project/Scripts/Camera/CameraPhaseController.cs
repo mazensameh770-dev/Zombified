@@ -23,12 +23,19 @@ public class CameraPhaseController : MonoBehaviour
 
     [Header("UI To Show/Hide During Setup")]
     [SerializeField] private GameObject cardBarRoot;
-    [SerializeField] private CardDeckSpreader cardDeckSpreader; 
+    [SerializeField] private CardDeckSpreader cardDeckSpreader;
 
-    [Header("Phase Buttons")]
-    [SerializeField] private GameObject putTrapsButton; 
-    [SerializeField] private GameObject backButton;      
-    [SerializeField] private GameObject nextLevelButton; 
+    [Header("Phase Buttons (any number of buttons per phase)")]
+    [Tooltip("Shown only while in the Isometric phase - e.g. EditTraps, Simulate")]
+    [SerializeField] private GameObject[] isometricPhaseButtons;
+    [Tooltip("Shown only while in the Setup / Top-Down phase - e.g. BackToGame, Clear, RemoveTraps")]
+    [SerializeField] private GameObject[] setupPhaseButtons;
+    [SerializeField] private GameObject nextLevelButton;
+
+    [Header("Gameplay HUD (shown for the whole level, hidden at Main Menu)")]
+    [SerializeField] private GameObject timeUI;
+    [SerializeField] private GameObject starsUI;
+    [SerializeField] private GameObject pauseButtonUI;
 
     [Header("Hooks (optional, clears placement state on transitions)")]
     [SerializeField] private CardSelectionManager cardSelectionManager;
@@ -38,15 +45,26 @@ public class CameraPhaseController : MonoBehaviour
     private bool isTransitioning;
     private int currentLevelIndex;
 
+    private Vector3 homePosition;
+    private Quaternion homeRotation;
+
     public static bool IsInSetupPhase { get; private set; }
+    public int CurrentLevelIndex => currentLevelIndex;
 
     private LevelViewpoints CurrentLevel => levels[currentLevelIndex];
+
+    private void Awake()
+    {
+        homePosition = transform.position;
+        homeRotation = transform.rotation;
+    }
 
     private void Start()
     {
         SetCardBarVisible(false);
-        SetButtonsVisible(putTrapsVisible: false, backVisible: false);
-        //nextLevelButton?.SetActive(false);
+        SetPhaseButtonsVisible(isometricVisible: false, setupVisible: false);
+        nextLevelButton?.SetActive(false);
+        SetGameplayHUDVisible(false);
         IsInSetupPhase = false;
     }
 
@@ -58,11 +76,33 @@ public class CameraPhaseController : MonoBehaviour
             return;
         }
 
-        if (activeTransition != null) StopCoroutine(activeTransition);
-        isTransitioning = false;
-
         currentLevelIndex = levelIndex;
-        SnapToLevelStart();
+        isInSetupPhase = false;
+        IsInSetupPhase = false;
+
+        SetCardBarVisible(false);
+        SetPhaseButtonsVisible(isometricVisible: false, setupVisible: false); 
+        nextLevelButton?.SetActive(false);
+        cardSelectionManager?.ClearSelection();
+
+        StartTransition(CurrentLevel.isometricViewPoint, onComplete: () =>
+        {
+            SetPhaseButtonsVisible(isometricVisible: true, setupVisible: false);
+            SetGameplayHUDVisible(true);
+        });
+    }
+
+    public void ReturnToMainMenuView()
+    {
+        isInSetupPhase = false;
+        IsInSetupPhase = false;
+
+        SetCardBarVisible(false);
+        SetPhaseButtonsVisible(isometricVisible: false, setupVisible: false);
+        nextLevelButton?.SetActive(false);
+        cardSelectionManager?.ClearSelection();
+
+        StartTransitionToHome(onComplete: () => SetGameplayHUDVisible(false));
     }
 
     public void ShowNextLevelButton()
@@ -82,32 +122,18 @@ public class CameraPhaseController : MonoBehaviour
         GoToLevel(currentLevelIndex + 1);
     }
 
-    private void SnapToLevelStart()
-    {
-        isInSetupPhase = false;
-        IsInSetupPhase = false;
-
-        transform.position = CurrentLevel.isometricViewPoint.position;
-        transform.rotation = CurrentLevel.isometricViewPoint.rotation;
-
-        SetCardBarVisible(false);
-        SetButtonsVisible(putTrapsVisible: true, backVisible: false);
-        nextLevelButton?.SetActive(false);
-        cardSelectionManager?.ClearSelection();
-    }
-
     public void EnterSetupPhase()
     {
         if (isInSetupPhase || isTransitioning) return;
         isInSetupPhase = true;
         IsInSetupPhase = true;
 
-        SetButtonsVisible(putTrapsVisible: false, backVisible: false); 
+        SetPhaseButtonsVisible(isometricVisible: false, setupVisible: false);
         StartTransition(CurrentLevel.setupViewPoint, onComplete: () =>
         {
             SetCardBarVisible(true);
-            SetButtonsVisible(putTrapsVisible: false, backVisible: true);
-            cardDeckSpreader?.PlayFanReveal(); 
+            SetPhaseButtonsVisible(isometricVisible: false, setupVisible: true);
+            cardDeckSpreader?.PlayFanReveal();
         });
     }
 
@@ -118,19 +144,28 @@ public class CameraPhaseController : MonoBehaviour
         IsInSetupPhase = false;
 
         SetCardBarVisible(false);
-        SetButtonsVisible(putTrapsVisible: false, backVisible: false); 
+        SetPhaseButtonsVisible(isometricVisible: false, setupVisible: false);
         cardSelectionManager?.ClearSelection();
 
         StartTransition(CurrentLevel.isometricViewPoint, onComplete: () =>
         {
-            SetButtonsVisible(putTrapsVisible: true, backVisible: false);
+            SetPhaseButtonsVisible(isometricVisible: true, setupVisible: false);
         });
     }
 
-    private void SetButtonsVisible(bool putTrapsVisible, bool backVisible)
+    private void SetPhaseButtonsVisible(bool isometricVisible, bool setupVisible)
     {
-        if (putTrapsButton != null) putTrapsButton.SetActive(putTrapsVisible);
-        if (backButton != null) backButton.SetActive(backVisible);
+        SetActiveAll(isometricPhaseButtons, isometricVisible);
+        SetActiveAll(setupPhaseButtons, setupVisible);
+    }
+
+    private void SetActiveAll(GameObject[] objects, bool visible)
+    {
+        if (objects == null) return;
+        foreach (GameObject obj in objects)
+        {
+            if (obj != null) obj.SetActive(visible);
+        }
     }
 
     private void SetCardBarVisible(bool visible)
@@ -138,13 +173,26 @@ public class CameraPhaseController : MonoBehaviour
         if (cardBarRoot != null) cardBarRoot.SetActive(visible);
     }
 
+    private void SetGameplayHUDVisible(bool visible)
+    {
+        if (timeUI != null) timeUI.SetActive(visible);
+        if (starsUI != null) starsUI.SetActive(visible);
+        if (pauseButtonUI != null) pauseButtonUI.SetActive(visible);
+    }
+
     private void StartTransition(Transform target, Action onComplete)
     {
         if (activeTransition != null) StopCoroutine(activeTransition);
-        activeTransition = StartCoroutine(TransitionRoutine(target, onComplete));
+        activeTransition = StartCoroutine(TransitionRoutine(target.position, target.rotation, onComplete));
     }
 
-    private IEnumerator TransitionRoutine(Transform target, Action onComplete)
+    private void StartTransitionToHome(Action onComplete)
+    {
+        if (activeTransition != null) StopCoroutine(activeTransition);
+        activeTransition = StartCoroutine(TransitionRoutine(homePosition, homeRotation, onComplete));
+    }
+
+    private IEnumerator TransitionRoutine(Vector3 targetPosition, Quaternion targetRotation, Action onComplete)
     {
         isTransitioning = true;
 
@@ -157,14 +205,14 @@ public class CameraPhaseController : MonoBehaviour
             elapsed += Time.deltaTime;
             float t = easeCurve.Evaluate(Mathf.Clamp01(elapsed / transitionDuration));
 
-            transform.position = Vector3.Lerp(startPos, target.position, t);
-            transform.rotation = Quaternion.Slerp(startRot, target.rotation, t);
+            transform.position = Vector3.Lerp(startPos, targetPosition, t);
+            transform.rotation = Quaternion.Slerp(startRot, targetRotation, t);
 
             yield return null;
         }
 
-        transform.position = target.position;
-        transform.rotation = target.rotation;
+        transform.position = targetPosition;
+        transform.rotation = targetRotation;
         isTransitioning = false;
         activeTransition = null;
         onComplete?.Invoke();
