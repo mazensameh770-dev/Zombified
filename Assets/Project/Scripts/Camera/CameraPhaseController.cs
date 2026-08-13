@@ -26,9 +26,7 @@ public class CameraPhaseController : MonoBehaviour
     [SerializeField] private CardDeckSpreader cardDeckSpreader;
 
     [Header("Phase Buttons (any number of buttons per phase)")]
-    [Tooltip("Shown only while in the Isometric phase - e.g. EditTraps, Simulate")]
     [SerializeField] private GameObject[] isometricPhaseButtons;
-    [Tooltip("Shown only while in the Setup / Top-Down phase - e.g. BackToGame, Clear, RemoveTraps")]
     [SerializeField] private GameObject[] setupPhaseButtons;
     [SerializeField] private GameObject nextLevelButton;
 
@@ -81,7 +79,7 @@ public class CameraPhaseController : MonoBehaviour
         IsInSetupPhase = false;
 
         SetCardBarVisible(false);
-        SetPhaseButtonsVisible(isometricVisible: false, setupVisible: false); 
+        SetPhaseButtonsVisible(isometricVisible: false, setupVisible: false);
         nextLevelButton?.SetActive(false);
         cardSelectionManager?.ClearSelection();
 
@@ -92,7 +90,7 @@ public class CameraPhaseController : MonoBehaviour
         });
     }
 
-    public void ReturnToMainMenuView()
+    public void ReturnToMainMenuView(Action onComplete = null)
     {
         isInSetupPhase = false;
         IsInSetupPhase = false;
@@ -102,7 +100,11 @@ public class CameraPhaseController : MonoBehaviour
         nextLevelButton?.SetActive(false);
         cardSelectionManager?.ClearSelection();
 
-        StartTransitionToHome(onComplete: () => SetGameplayHUDVisible(false));
+        StartTransitionToHome(onComplete: () =>
+        {
+            SetGameplayHUDVisible(false);
+            onComplete?.Invoke();
+        });
     }
 
     public void ShowNextLevelButton()

@@ -1,3 +1,4 @@
+using System;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -47,7 +48,6 @@ public class PauseUI : MonoBehaviour
     private void OpenOptions()
     {
         fadeUI.Hide();
-
         optionsUI.Open(gameObject);
     }
 
@@ -55,8 +55,12 @@ public class PauseUI : MonoBehaviour
     {
         Time.timeScale = 1f;
         fadeUI.Hide();
-        cameraPhaseController.ReturnToMainMenuView();
-        mainMenuUI.SetActive(true);
+        gameObject.SetActive(false);
+
+        cameraPhaseController.ReturnToMainMenuView(() =>
+        {
+            mainMenuUI.SetActive(true);
+        });
     }
 
     private void OnDestroy()
