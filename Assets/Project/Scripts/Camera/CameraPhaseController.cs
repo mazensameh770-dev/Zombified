@@ -46,7 +46,7 @@ public class CameraPhaseController : MonoBehaviour
     {
         SetCardBarVisible(false);
         SetButtonsVisible(putTrapsVisible: false, backVisible: false);
-        nextLevelButton?.SetActive(false);
+        //nextLevelButton?.SetActive(false);
         IsInSetupPhase = false;
     }
 
