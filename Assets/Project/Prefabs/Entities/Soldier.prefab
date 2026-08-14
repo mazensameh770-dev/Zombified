@@ -10254,7 +10254,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a72b178662d6b25488fc576af2edaffe, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Soldier
-  range: 4
+  range: 3
   direction: 0
   myPath: {fileID: 11400000, guid: 28431260359faa4459f0838b5b433931, type: 2}
   animator: {fileID: 4788976038785039945}

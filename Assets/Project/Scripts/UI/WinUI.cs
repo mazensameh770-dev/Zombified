@@ -92,6 +92,8 @@ public class WinUI : MonoBehaviour
 
         winPanel.SetActive(false);
 
+        GameManager.Instance.RestartCurrentLevel();
+
         cameraPhaseController.GoToLevel(
             cameraPhaseController.CurrentLevelIndex
         );

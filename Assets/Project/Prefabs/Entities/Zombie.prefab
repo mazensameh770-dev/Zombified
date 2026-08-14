@@ -46,7 +46,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Zombie
   range: 4
-  animator: {fileID: 0}
+  animator: {fileID: 5441439920652549437}
 --- !u!1001 &5441439920659755069
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -124,6 +124,11 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: e7d16897c7e623049889ee327d7ec1c9, type: 3}
+--- !u!95 &5441439920652549437 stripped
+Animator:
+  m_CorrespondingSourceObject: {fileID: 9571584, guid: e7d16897c7e623049889ee327d7ec1c9, type: 3}
+  m_PrefabInstance: {fileID: 5441439920659755069}
+  m_PrefabAsset: {fileID: 0}
 --- !u!4 &5441439920659562161 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 462476, guid: e7d16897c7e623049889ee327d7ec1c9, type: 3}

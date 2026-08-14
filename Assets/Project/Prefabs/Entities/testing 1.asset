@@ -13,4 +13,4 @@ MonoBehaviour:
   m_Name: testing 1
   m_EditorClassIdentifier: Assembly-CSharp::PathSO
   actionLength: 4
-  actions: 00000000000000000000000000000000
+  actions: 01000000010000000000000004000000

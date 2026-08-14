@@ -84,6 +84,27 @@ public class GameManager : MonoBehaviour
         simulationRoutine = null;
     }
 
+    public void RestartCurrentLevel()
+    {
+        if (currentLevel == null)
+        {
+            Debug.LogWarning("No level selected.");
+            return;
+        }
+
+        if (simulationRoutine != null)
+        {
+            StopCoroutine(simulationRoutine);
+            simulationRoutine = null;
+        }
+
+        Time.timeScale = 1f;
+
+        timeUI.ResetTimer();
+
+        currentLevel.ResetLevel();
+    }
+
     private void WinLevel()
     {
         simulationRoutine = null;
