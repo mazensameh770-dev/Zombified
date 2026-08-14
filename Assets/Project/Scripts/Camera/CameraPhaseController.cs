@@ -92,7 +92,7 @@ public class CameraPhaseController : MonoBehaviour
     {
         if (GameManager.Instance != null)
         {
-            GameManager.Instance.StopSimulationAndReset();
+            GameManager.Instance.StopSimulationAndReset(true);
         }
 
         timeUI?.ResetTimer();
@@ -131,7 +131,7 @@ public class CameraPhaseController : MonoBehaviour
 
         if (GameManager.Instance != null)
         {
-            GameManager.Instance.StopSimulationAndReset();
+            GameManager.Instance.StopSimulationAndReset(false);
         }
 
         isInSetupPhase = true;

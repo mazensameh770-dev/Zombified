@@ -87,7 +87,7 @@ public class GameManager : MonoBehaviour
         OnSimulationEnded?.Invoke();
     }
 
-    public void StopSimulationAndReset()
+    public void StopSimulationAndReset(bool resetTimer)
     {
         StopSimulationOnly();
 
@@ -96,7 +96,7 @@ public class GameManager : MonoBehaviour
             currentLevel.ResetLevel();
         }
 
-        if (timeUI != null)
+        if (timeUI != null && resetTimer)
         {
             timeUI.ResetTimer();
         }
@@ -121,7 +121,7 @@ public class GameManager : MonoBehaviour
             return;
         }
 
-        StopSimulationAndReset();
+        StopSimulationAndReset(true);
         Time.timeScale = 1f;
     }
 

@@ -96,19 +96,15 @@ public class Soldier : GridObject {
         switch (action) {
             case ActionType.moveForward:
                 MoveForward();
-                Debug.Log("MoveForward");
                 break;
             case ActionType.moveRight:
                 MoveRight();
-                Debug.Log("MoveRight");
                 break;
             case ActionType.moveLeft:
                 MoveLeft();
-                Debug.Log("MoveLeft");
                 break;
             case ActionType.rotateBack:
                 RotateBack();
-                Debug.Log("RotateBack");
                 break;
             case ActionType.idle:
                 Idle();

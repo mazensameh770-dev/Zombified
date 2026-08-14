@@ -40,7 +40,7 @@ public class SimulationUI : MonoBehaviour
     {
         if (GameManager.Instance != null)
         {
-            GameManager.Instance.StopSimulationAndReset();
+            GameManager.Instance.StopSimulationAndReset(false);
         }
     }
 
@@ -48,7 +48,7 @@ public class SimulationUI : MonoBehaviour
     {
         if (GameManager.Instance != null)
         {
-            GameManager.Instance.StopSimulationAndReset();
+            GameManager.Instance.StopSimulationAndReset(false);
         }
     }
 
@@ -57,6 +57,7 @@ public class SimulationUI : MonoBehaviour
         if (resetButton != null)
         {
             resetButton.gameObject.SetActive(true);
+            simulateButton.gameObject.SetActive(false);
         }
     }
 
@@ -65,6 +66,7 @@ public class SimulationUI : MonoBehaviour
         if (resetButton != null)
         {
             resetButton.gameObject.SetActive(false);
+            simulateButton.gameObject.SetActive(true);
         }
     }
 
