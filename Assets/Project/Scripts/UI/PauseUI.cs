@@ -37,6 +37,7 @@ public class PauseUI : MonoBehaviour
     {
         Time.timeScale = 1f;
         fadeUI.Hide();
+        gameObject.SetActive(false);
     }
 
     private void OpenOptions()
@@ -48,6 +49,7 @@ public class PauseUI : MonoBehaviour
     private void ReturnToMainMenu()
     {
         Time.timeScale = 1f;
+        ClearAllTraps();
         fadeUI.Hide();
         gameObject.SetActive(false);
 
@@ -55,6 +57,30 @@ public class PauseUI : MonoBehaviour
         {
             mainMenuUI.SetActive(true);
         });
+    }
+
+    private void ClearAllTraps()
+    {
+        if (GameManager.Instance != null && GameManager.Instance.CurrentLevelRoot != null)
+        {
+            Trap[] levelTraps = GameManager.Instance.CurrentLevelRoot.GetComponentsInChildren<Trap>(true);
+            foreach (Trap trap in levelTraps)
+            {
+                if (trap == null) continue;
+                GridTile tile = trap.GetCurrentTile();
+                if (tile != null) tile.RemoveObject();
+                Destroy(trap.gameObject);
+            }
+        }
+
+        Trap[] sceneTraps = FindObjectsOfType<Trap>(true);
+        foreach (Trap trap in sceneTraps)
+        {
+            if (trap == null) continue;
+            GridTile tile = trap.GetCurrentTile();
+            if (tile != null) tile.RemoveObject();
+            Destroy(trap.gameObject);
+        }
     }
 
     private void OnDestroy()

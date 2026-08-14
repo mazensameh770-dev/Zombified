@@ -9,7 +9,7 @@ public class TrapCardUI : MonoBehaviour, IPointerClickHandler
     [SerializeField] private TrapCardData trapData;
     [SerializeField] private TMP_Text quantityText;
     [SerializeField] private TMP_Text nameText;
-    [SerializeField] private int startingQuantity = 3; 
+    [SerializeField] private int startingQuantity = 3;
 
     [Header("Highlight Animation")]
     [SerializeField] private float selectedScale = 1.15f;
@@ -17,7 +17,7 @@ public class TrapCardUI : MonoBehaviour, IPointerClickHandler
     [SerializeField] private float animationDuration = 0.15f;
 
     private RectTransform rectTransform;
-    private Vector2 restPosition;   
+    private Vector2 restPosition;
     private Vector3 restScale;
     private Coroutine activeAnimation;
     private int remainingQuantity;
@@ -31,12 +31,18 @@ public class TrapCardUI : MonoBehaviour, IPointerClickHandler
         remainingQuantity = startingQuantity;
         UpdateQuantityText();
 
-        if (nameText != null) nameText.text = trapData.trapName;
+        if (nameText != null && trapData != null) nameText.text = trapData.trapName;
     }
 
     private void Start()
     {
-        CardSelectionManager.Instance.RegisterCard(this);
+        restPosition = rectTransform.anchoredPosition;
+        restScale = rectTransform.localScale;
+
+        if (CardSelectionManager.Instance != null)
+        {
+            CardSelectionManager.Instance.RegisterCard(this);
+        }
     }
 
     public void OnPointerClick(PointerEventData eventData)

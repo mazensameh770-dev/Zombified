@@ -28,7 +28,6 @@ public class CameraPhaseController : MonoBehaviour
     [Header("Phase Buttons (any number of buttons per phase)")]
     [SerializeField] private GameObject[] isometricPhaseButtons;
     [SerializeField] private GameObject[] setupPhaseButtons;
-    //[SerializeField] private GameObject nextLevelButton;
 
     [Header("Gameplay HUD (shown for the whole level, hidden at Main Menu)")]
     [SerializeField] private TimeUI timeUI;
@@ -61,7 +60,6 @@ public class CameraPhaseController : MonoBehaviour
     {
         SetCardBarVisible(false);
         SetPhaseButtonsVisible(isometricVisible: false, setupVisible: false);
-        //nextLevelButton?.SetActive(false);
         SetGameplayHUDVisible(false);
         IsInSetupPhase = false;
     }
@@ -81,7 +79,6 @@ public class CameraPhaseController : MonoBehaviour
 
         SetCardBarVisible(false);
         SetPhaseButtonsVisible(isometricVisible: false, setupVisible: false);
-        //nextLevelButton?.SetActive(false);
         cardSelectionManager?.ClearSelection();
 
         StartTransition(CurrentLevel.isometricViewPoint, onComplete: () =>
@@ -93,13 +90,17 @@ public class CameraPhaseController : MonoBehaviour
 
     public void ReturnToMainMenuView(Action onComplete = null)
     {
+        if (GameManager.Instance != null)
+        {
+            GameManager.Instance.StopSimulationAndReset();
+        }
+
         timeUI?.ResetTimer();
         isInSetupPhase = false;
         IsInSetupPhase = false;
 
         SetCardBarVisible(false);
         SetPhaseButtonsVisible(isometricVisible: false, setupVisible: false);
-        //nextLevelButton?.SetActive(false);
         cardSelectionManager?.ClearSelection();
         SetGameplayHUDVisible(false);
 
@@ -116,20 +117,23 @@ public class CameraPhaseController : MonoBehaviour
             Debug.Log("[CameraPhaseController] That was the last level - no Next Level button to show.");
             return;
         }
-
-        //nextLevelButton?.SetActive(true);
     }
 
     public void OnNextLevelButtonPressed()
     {
         timeUI?.ResetTimer();
-        //nextLevelButton?.SetActive(false);
         GoToLevel(currentLevelIndex + 1);
     }
 
     public void EnterSetupPhase()
     {
         if (isInSetupPhase || isTransitioning) return;
+
+        if (GameManager.Instance != null)
+        {
+            GameManager.Instance.StopSimulationAndReset();
+        }
+
         isInSetupPhase = true;
         IsInSetupPhase = true;
 

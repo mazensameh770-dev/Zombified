@@ -5,7 +5,7 @@ using UnityEngine;
 
 public class GameManager : MonoBehaviour
 {
-    public static GameManager Instance {  get; private set; }
+    public static GameManager Instance { get; private set; }
 
     [SerializeField] private LevelController[] levels;
 
@@ -17,10 +17,15 @@ public class GameManager : MonoBehaviour
     private Coroutine simulationRoutine;
 
     public int CurrentLevelIndex { get; private set; } = -1;
+    public bool IsSimulating => simulationRoutine != null;
 
     public event Action<float, int> OnLevelWon;
+    public event Action OnSimulationStarted;
+    public event Action OnSimulationEnded;
+    public event Action OnLevelReset;
 
-    private void Awake() {
+    private void Awake()
+    {
         if (Instance == null) Instance = this;
         else Destroy(this.gameObject);
     }
@@ -33,18 +38,14 @@ public class GameManager : MonoBehaviour
             return;
         }
 
-        if (simulationRoutine != null)
-        {
-            StopCoroutine(simulationRoutine);
-            simulationRoutine = null;
-        }
+        StopSimulationOnly();
 
         CurrentLevelIndex = levelIndex;
         currentLevel = levels[levelIndex];
 
         currentLevel.ResetLevel();
+        OnLevelReset?.Invoke();
     }
-
 
     public void Simulate()
     {
@@ -57,6 +58,7 @@ public class GameManager : MonoBehaviour
         if (simulationRoutine != null)
             return;
 
+        OnSimulationStarted?.Invoke();
         simulationRoutine = StartCoroutine(SimulationRoutine());
     }
 
@@ -82,6 +84,33 @@ public class GameManager : MonoBehaviour
         }
 
         simulationRoutine = null;
+        OnSimulationEnded?.Invoke();
+    }
+
+    public void StopSimulationAndReset()
+    {
+        StopSimulationOnly();
+
+        if (currentLevel != null)
+        {
+            currentLevel.ResetLevel();
+        }
+
+        if (timeUI != null)
+        {
+            timeUI.ResetTimer();
+        }
+
+        OnLevelReset?.Invoke();
+    }
+
+    private void StopSimulationOnly()
+    {
+        if (simulationRoutine != null)
+        {
+            StopCoroutine(simulationRoutine);
+            simulationRoutine = null;
+        }
     }
 
     public void RestartCurrentLevel()
@@ -92,17 +121,8 @@ public class GameManager : MonoBehaviour
             return;
         }
 
-        if (simulationRoutine != null)
-        {
-            StopCoroutine(simulationRoutine);
-            simulationRoutine = null;
-        }
-
+        StopSimulationAndReset();
         Time.timeScale = 1f;
-
-        timeUI.ResetTimer();
-
-        currentLevel.ResetLevel();
     }
 
     private void WinLevel()
@@ -111,7 +131,7 @@ public class GameManager : MonoBehaviour
 
         Time.timeScale = 0f;
 
-        float timeSpent = timeUI.GetTime();
+        float timeSpent = timeUI != null ? timeUI.GetTime() : 0f;
 
         int stars = currentLevel.CalculateStars(timeSpent);
 

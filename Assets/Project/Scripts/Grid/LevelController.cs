@@ -1,4 +1,12 @@
+using System;
 using UnityEngine;
+
+[Serializable]
+public class TrapLimit
+{
+    public TrapCardData trapData;
+    public int count;
+}
 
 public class LevelController : MonoBehaviour
 {
@@ -7,7 +15,20 @@ public class LevelController : MonoBehaviour
     [Header("Star Rating")]
     [SerializeField] private float threeStarTime = 20f;
     [SerializeField] private float twoStarTime = 40f;
+
+    [Header("Traps Limits")]
+    [SerializeField] private TrapLimit[] trapLimits;
+
     public int SimulationTurns => simulationTurns;
+    public TrapLimit[] TrapLimits => trapLimits;
+
+    private void OnEnable()
+    {
+        if (CardSelectionManager.Instance != null)
+        {
+            CardSelectionManager.Instance.UpdateAllCardsForCurrentLevel();
+        }
+    }
 
     public GridObject[] GetGridObjects()
     {
@@ -34,6 +55,11 @@ public class LevelController : MonoBehaviour
             if (obj != null)
                 obj.ResetForLevel();
         }
+
+        if (CardSelectionManager.Instance != null)
+        {
+            CardSelectionManager.Instance.UpdateAllCardsForCurrentLevel();
+        }
     }
 
     public bool HasWon()
@@ -50,5 +76,18 @@ public class LevelController : MonoBehaviour
         }
 
         return true;
+    }
+
+    public int GetTrapCount(TrapCardData data)
+    {
+        if (trapLimits == null || data == null) return 0;
+
+        foreach (var limit in trapLimits)
+        {
+            if (limit.trapData == data)
+                return limit.count;
+        }
+
+        return 0;
     }
 }

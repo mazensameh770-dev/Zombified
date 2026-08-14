@@ -7,7 +7,7 @@ public class TrapPlacementController : MonoBehaviour
     [SerializeField] private Camera placementCamera;
     [SerializeField] private LayerMask gridLayerMask;
     [SerializeField] private Material ghostMaterial;
-    [SerializeField] private float ghostScale = 0.6f; 
+    [SerializeField] private float ghostScale = 0.6f;
 
     private TrapCardData selectedTrapData;
     private GameObject ghostInstance;
@@ -96,19 +96,17 @@ public class TrapPlacementController : MonoBehaviour
         Vector3 spawnPosition = GetTileCenter(currentHoveredTile);
 
         GameObject placedTrap = Instantiate(selectedTrapData.trapPrefab,
-                                            spawnPosition,Quaternion.identity,
+                                            spawnPosition, Quaternion.identity,
                                             GameManager.Instance.CurrentLevelRoot
                                             );
 
         SnapToTileSurface(placedTrap, spawnPosition);
 
         GridTile tileState = currentHoveredTile.GetComponent<GridTile>();
-        if (tileState != null)
-        {
-            tileState.PlaceObject(placedTrap.GetComponent<GridObject>());
+        if (tileState != null) tileState.PlaceObject(placedTrap.GetComponent<GridObject>());
 
-            SoundManager.Instance.PlayTrapPlace();
-        }
+        Trap trapComponent = placedTrap.GetComponent<Trap>();
+        trapComponent?.SetSourceCardData(selectedTrapData);
 
         CardSelectionManager.Instance.NotifyTrapPlaced();
     }

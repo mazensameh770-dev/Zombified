@@ -13,7 +13,53 @@ public class CardSelectionManager : Singleton<CardSelectionManager>
 
     public void RegisterCard(TrapCardUI card)
     {
+        if (card == null || card.TrapData == null) return;
+
         cardsByData[card.TrapData] = card;
+        UpdateCardCountFromLevel(card);
+    }
+
+    public void UpdateAllCardsForCurrentLevel()
+    {
+        ClearSelection();
+
+        LevelController activeLevel = FindActiveLevelController();
+        if (activeLevel == null) return;
+
+        foreach (var kvp in cardsByData)
+        {
+            int count = activeLevel.GetTrapCount(kvp.Key);
+            kvp.Value.SetQuantity(count);
+        }
+    }
+
+    private void UpdateCardCountFromLevel(TrapCardUI card)
+    {
+        LevelController activeLevel = FindActiveLevelController();
+        if (activeLevel == null || card == null || card.TrapData == null) return;
+
+        int count = activeLevel.GetTrapCount(card.TrapData);
+        card.SetQuantity(count);
+    }
+
+    private LevelController FindActiveLevelController()
+    {
+        if (GameManager.Instance != null && GameManager.Instance.CurrentLevelRoot != null)
+        {
+            LevelController level = GameManager.Instance.CurrentLevelRoot.GetComponentInChildren<LevelController>();
+            if (level != null) return level;
+        }
+
+        LevelController[] allLevels = FindObjectsOfType<LevelController>();
+        foreach (LevelController level in allLevels)
+        {
+            if (level.gameObject.activeInHierarchy)
+            {
+                return level;
+            }
+        }
+
+        return null;
     }
 
     public void RestoreOne(TrapCardData trapData)

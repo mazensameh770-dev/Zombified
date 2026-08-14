@@ -4862,7 +4862,7 @@ GameObject:
   - component: {fileID: 5999570158571180850}
   m_Layer: 0
   m_Name: ZombieTrap
-  m_TagString: Untagged
+  m_TagString: Trap
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0

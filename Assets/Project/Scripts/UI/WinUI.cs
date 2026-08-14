@@ -86,6 +86,8 @@ public class WinUI : MonoBehaviour
     {
         Time.timeScale = 1f;
 
+        ClearAllTraps();
+
         fadeUI.Hide();
 
         SetExtraGameplayUIVisible(true);
@@ -97,11 +99,18 @@ public class WinUI : MonoBehaviour
         cameraPhaseController.GoToLevel(
             cameraPhaseController.CurrentLevelIndex
         );
+
+        if (CardSelectionManager.Instance != null)
+        {
+            CardSelectionManager.Instance.UpdateAllCardsForCurrentLevel();
+        }
     }
 
     private void HandleNextLevel()
     {
         Time.timeScale = 1f;
+
+        ClearAllTraps();
 
         fadeUI.Hide();
 
@@ -110,11 +119,18 @@ public class WinUI : MonoBehaviour
         winPanel.SetActive(false);
 
         cameraPhaseController.OnNextLevelButtonPressed();
+
+        if (CardSelectionManager.Instance != null)
+        {
+            CardSelectionManager.Instance.UpdateAllCardsForCurrentLevel();
+        }
     }
 
     private void HandleMainMenu()
     {
         Time.timeScale = 1f;
+
+        ClearAllTraps();
 
         fadeUI.Hide();
 
@@ -123,6 +139,35 @@ public class WinUI : MonoBehaviour
         cameraPhaseController.ReturnToMainMenuView();
 
         mainMenuUI.SetActive(true);
+
+        if (CardSelectionManager.Instance != null)
+        {
+            CardSelectionManager.Instance.ClearSelection();
+        }
+    }
+
+    private void ClearAllTraps()
+    {
+        if (GameManager.Instance != null && GameManager.Instance.CurrentLevelRoot != null)
+        {
+            Trap[] levelTraps = GameManager.Instance.CurrentLevelRoot.GetComponentsInChildren<Trap>(true);
+            foreach (Trap trap in levelTraps)
+            {
+                if (trap == null) continue;
+                GridTile tile = trap.GetCurrentTile();
+                if (tile != null) tile.RemoveObject();
+                Destroy(trap.gameObject);
+            }
+        }
+
+        Trap[] sceneTraps = FindObjectsOfType<Trap>(true);
+        foreach (Trap trap in sceneTraps)
+        {
+            if (trap == null) continue;
+            GridTile tile = trap.GetCurrentTile();
+            if (tile != null) tile.RemoveObject();
+            Destroy(trap.gameObject);
+        }
     }
 
     private void SetExtraGameplayUIVisible(bool visible)
