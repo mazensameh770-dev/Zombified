@@ -23,7 +23,8 @@ public class TrapPlacementController : MonoBehaviour
 
     private void Start()
     {
-        CardSelectionManager.Instance.OnCardSelected += HandleCardSelected;
+        if (CardSelectionManager.Instance != null)
+            CardSelectionManager.Instance.OnCardSelected += HandleCardSelected;
     }
 
     private void OnDisable()
@@ -49,23 +50,28 @@ public class TrapPlacementController : MonoBehaviour
 
     private void Update()
     {
+        HandleTrapRemoval();
+
         if (selectedTrapData == null || ghostInstance == null) return;
 
         Ray ray = placementCamera.ScreenPointToRay(Input.mousePosition);
 
         if (Physics.Raycast(ray, out RaycastHit hit, 200f, gridLayerMask))
         {
-            currentHoveredTile = hit.collider.transform;
-            ghostInstance.SetActive(true);
-            ghostInstance.transform.position = GetTileCenter(currentHoveredTile);
-            SnapToTileSurface(ghostInstance, GetTileCenter(currentHoveredTile));
-
-            if (Input.GetMouseButtonDown(0))
+            GridTile tileState = GetTileFromHit(hit);
+            if (tileState != null)
             {
-                GridTile tileState = currentHoveredTile.GetComponent<GridTile>();
-                if (tileState == null || IsPlacementValid(tileState))
+                currentHoveredTile = tileState.transform;
+                ghostInstance.SetActive(true);
+                ghostInstance.transform.position = GetTileCenter(currentHoveredTile);
+                SnapToTileSurface(ghostInstance, GetTileCenter(currentHoveredTile));
+
+                if (Input.GetMouseButtonDown(0))
                 {
-                    PlaceTrapOnCurrentTile();
+                    if (IsPlacementValid(tileState))
+                    {
+                        PlaceTrapOnCurrentTile();
+                    }
                 }
             }
         }
@@ -74,6 +80,41 @@ public class TrapPlacementController : MonoBehaviour
             currentHoveredTile = null;
             ghostInstance.SetActive(false);
         }
+    }
+
+    private void HandleTrapRemoval()
+    {
+        if (Input.GetMouseButtonDown(1))
+        {
+            Ray ray = placementCamera.ScreenPointToRay(Input.mousePosition);
+            if (Physics.Raycast(ray, out RaycastHit hit, 200f, gridLayerMask))
+            {
+                GridTile tile = GetTileFromHit(hit);
+                if (tile != null)
+                {
+                    GridObject existingObj = tile.GetCurrentObject();
+                    if (existingObj is Trap trap)
+                    {
+                        tile.RemoveObject(true);
+                        Destroy(trap.gameObject);
+                    }
+                }
+            }
+        }
+    }
+
+    private GridTile GetTileFromHit(RaycastHit hit)
+    {
+        GridTile tile = hit.collider.GetComponent<GridTile>();
+        if (tile == null)
+        {
+            GridObject gridObj = hit.collider.GetComponentInParent<GridObject>();
+            if (gridObj != null)
+            {
+                tile = gridObj.GetCurrentTile();
+            }
+        }
+        return tile;
     }
 
     private bool IsPlacementValid(GridTile tile)

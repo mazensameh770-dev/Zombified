@@ -7,7 +7,7 @@ public abstract class GridObject : MonoBehaviour
     [Header("Grid Object Settings")]
     protected GridTile currentGridTile;
     [SerializeField] protected int range;
-
+    public GridTile CurrentGridTile => currentGridTile;
     protected virtual void Start()
     {
     }

@@ -1,6 +1,8 @@
 using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
+using UnityEngine.SceneManagement;
+using DG.Tweening;
 
 public class WinUI : MonoBehaviour
 {
@@ -32,7 +34,8 @@ public class WinUI : MonoBehaviour
 
     private void Awake()
     {
-        winPanel.SetActive(false);
+        if (winPanel != null)
+            winPanel.SetActive(false);
 
         leftStar = FindStar("L_Star");
         middleStar = FindStar("M_Star");
@@ -56,7 +59,79 @@ public class WinUI : MonoBehaviour
         UpdateTimeText(timeSpent);
         UpdateStars(starCount);
 
-        winPanel.SetActive(true);
+        if (winPanel != null)
+            winPanel.SetActive(true);
+    }
+
+    private void ResetGameState()
+    {
+        Time.timeScale = 1f;
+
+        DOTween.KillAll();
+
+        ClearAllTraps();
+
+        if (fadeUI != null)
+            fadeUI.Hide();
+
+        if (winPanel != null)
+            winPanel.SetActive(false);
+
+        SetExtraGameplayUIVisible(true);
+    }
+
+    private void HandleRetry()
+    {
+        ResetGameState();
+
+        if (GameManager.Instance != null)
+        {
+            GameManager.Instance.RestartCurrentLevel();
+        }
+
+        if (cameraPhaseController != null)
+        {
+            cameraPhaseController.GoToLevel(cameraPhaseController.CurrentLevelIndex);
+        }
+
+        if (CardSelectionManager.Instance != null)
+        {
+            CardSelectionManager.Instance.UpdateAllCardsForCurrentLevel();
+        }
+    }
+
+    private void HandleNextLevel()
+    {
+        ResetGameState();
+
+        if (cameraPhaseController != null)
+        {
+            cameraPhaseController.OnNextLevelButtonPressed();
+        }
+
+        if (CardSelectionManager.Instance != null)
+        {
+            CardSelectionManager.Instance.UpdateAllCardsForCurrentLevel();
+        }
+    }
+
+    private void HandleMainMenu()
+    {
+        ResetGameState();
+
+        if (cameraPhaseController != null)
+        {
+            cameraPhaseController.ReturnToMainMenuView(() =>
+            {
+                if (mainMenuUI != null)
+                    mainMenuUI.SetActive(true);
+            });
+        }
+
+        if (CardSelectionManager.Instance != null)
+        {
+            CardSelectionManager.Instance.ClearSelection();
+        }
     }
 
     private void UpdateStars(int starCount)
@@ -68,82 +143,16 @@ public class WinUI : MonoBehaviour
 
     private void UpdateStar(Image star, bool filled)
     {
-        if (star == null)
-            return;
-
+        if (star == null) return;
         star.sprite = filled ? filledStar : emptyStar;
     }
 
     private void UpdateTimeText(float timeSpent)
     {
+        if (timeText == null) return;
         int minutes = Mathf.FloorToInt(timeSpent / 60f);
         int seconds = Mathf.FloorToInt(timeSpent % 60f);
-
         timeText.text = $"{minutes:00}:{seconds:00}";
-    }
-
-    private void HandleRetry()
-    {
-        Time.timeScale = 1f;
-
-        ClearAllTraps();
-
-        fadeUI.Hide();
-
-        SetExtraGameplayUIVisible(true);
-
-        winPanel.SetActive(false);
-
-        GameManager.Instance.RestartCurrentLevel();
-
-        cameraPhaseController.GoToLevel(
-            cameraPhaseController.CurrentLevelIndex
-        );
-
-        if (CardSelectionManager.Instance != null)
-        {
-            CardSelectionManager.Instance.UpdateAllCardsForCurrentLevel();
-        }
-    }
-
-    private void HandleNextLevel()
-    {
-        Time.timeScale = 1f;
-
-        ClearAllTraps();
-
-        fadeUI.Hide();
-
-        SetExtraGameplayUIVisible(true);
-
-        winPanel.SetActive(false);
-
-        cameraPhaseController.OnNextLevelButtonPressed();
-
-        if (CardSelectionManager.Instance != null)
-        {
-            CardSelectionManager.Instance.UpdateAllCardsForCurrentLevel();
-        }
-    }
-
-    private void HandleMainMenu()
-    {
-        Time.timeScale = 1f;
-
-        ClearAllTraps();
-
-        fadeUI.Hide();
-
-        winPanel.SetActive(false);
-
-        cameraPhaseController.ReturnToMainMenuView();
-
-        mainMenuUI.SetActive(true);
-
-        if (CardSelectionManager.Instance != null)
-        {
-            CardSelectionManager.Instance.ClearSelection();
-        }
     }
 
     private void ClearAllTraps()
@@ -172,6 +181,7 @@ public class WinUI : MonoBehaviour
 
     private void SetExtraGameplayUIVisible(bool visible)
     {
+        if (gameplayUIToHide == null) return;
         foreach (GameObject ui in gameplayUIToHide)
         {
             if (ui != null)
@@ -181,41 +191,32 @@ public class WinUI : MonoBehaviour
 
     private Image FindStar(string starName)
     {
+        if (winPanel == null) return null;
         Transform star = FindChildRecursive(winPanel.transform, starName);
 
         if (star == null)
         {
-            Debug.LogWarning(
-                $"Could not find {starName} inside {winPanel.name}"
-            );
-
+            Debug.LogWarning($"Could not find {starName} inside {winPanel.name}");
             return null;
         }
 
         Image image = star.GetComponent<Image>();
-
         if (image == null)
         {
-            Debug.LogWarning(
-                $"{starName} does not have an Image component."
-            );
+            Debug.LogWarning($"{starName} does not have an Image component.");
         }
 
         return image;
     }
 
-    private Transform FindChildRecursive(
-        Transform parent,
-        string childName)
+    private Transform FindChildRecursive(Transform parent, string childName)
     {
         foreach (Transform child in parent)
         {
             if (child.name == childName)
                 return child;
 
-            Transform result =
-                FindChildRecursive(child, childName);
-
+            Transform result = FindChildRecursive(child, childName);
             if (result != null)
                 return result;
         }
@@ -225,9 +226,9 @@ public class WinUI : MonoBehaviour
 
     private void OnDestroy()
     {
-        retryButton.onClick.RemoveListener(HandleRetry);
-        nextLevelButton.onClick.RemoveListener(HandleNextLevel);
-        mainMenuButton.onClick.RemoveListener(HandleMainMenu);
+        if (retryButton != null) retryButton.onClick.RemoveListener(HandleRetry);
+        if (nextLevelButton != null) nextLevelButton.onClick.RemoveListener(HandleNextLevel);
+        if (mainMenuButton != null) mainMenuButton.onClick.RemoveListener(HandleMainMenu);
 
         if (GameManager.Instance != null)
             GameManager.Instance.OnLevelWon -= Show;

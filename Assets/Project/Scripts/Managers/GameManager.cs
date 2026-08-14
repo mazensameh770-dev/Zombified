@@ -1,6 +1,5 @@
 using System;
 using System.Collections;
-using System.Threading.Tasks;
 using UnityEngine;
 
 public class GameManager : MonoBehaviour
@@ -38,6 +37,7 @@ public class GameManager : MonoBehaviour
             return;
         }
 
+        Time.timeScale = 1f;
         StopSimulationOnly();
 
         CurrentLevelIndex = levelIndex;
@@ -58,6 +58,7 @@ public class GameManager : MonoBehaviour
         if (simulationRoutine != null)
             return;
 
+        Time.timeScale = 1f;
         OnSimulationStarted?.Invoke();
         simulationRoutine = StartCoroutine(SimulationRoutine());
     }
@@ -89,6 +90,7 @@ public class GameManager : MonoBehaviour
 
     public void StopSimulationAndReset(bool resetTimer)
     {
+        Time.timeScale = 1f;
         StopSimulationOnly();
 
         if (currentLevel != null)
@@ -127,7 +129,7 @@ public class GameManager : MonoBehaviour
 
     private void WinLevel()
     {
-        simulationRoutine = null;
+        StopSimulationOnly();
 
         Time.timeScale = 0f;
 

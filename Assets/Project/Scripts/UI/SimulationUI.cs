@@ -6,6 +6,7 @@ public class SimulationUI : MonoBehaviour
     [SerializeField] private Button simulateButton;
     [SerializeField] private Button resetButton;
     [SerializeField] private Button editButton;
+    [SerializeField] private CameraPhaseController cameraPhaseController;
 
     private void Start()
     {
@@ -50,24 +51,31 @@ public class SimulationUI : MonoBehaviour
         {
             GameManager.Instance.StopSimulationAndReset(false);
         }
+
+        if (cameraPhaseController != null)
+        {
+            cameraPhaseController.EnterSetupPhase();
+        }
+        else
+        {
+            FindAnyObjectByType<CameraPhaseController>()?.EnterSetupPhase();
+        }
     }
 
     private void HandleSimulationStarted()
     {
         if (resetButton != null)
-        {
             resetButton.gameObject.SetActive(true);
+        if (simulateButton != null)
             simulateButton.gameObject.SetActive(false);
-        }
     }
 
     private void HandleLevelReset()
     {
         if (resetButton != null)
-        {
             resetButton.gameObject.SetActive(false);
+        if (simulateButton != null)
             simulateButton.gameObject.SetActive(true);
-        }
     }
 
     private void OnDestroy()
