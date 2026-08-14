@@ -28,10 +28,10 @@ public class CameraPhaseController : MonoBehaviour
     [Header("Phase Buttons (any number of buttons per phase)")]
     [SerializeField] private GameObject[] isometricPhaseButtons;
     [SerializeField] private GameObject[] setupPhaseButtons;
-    [SerializeField] private GameObject nextLevelButton;
+    //[SerializeField] private GameObject nextLevelButton;
 
     [Header("Gameplay HUD (shown for the whole level, hidden at Main Menu)")]
-    [SerializeField] private GameObject timeUI;
+    [SerializeField] private TimeUI timeUI;
     [SerializeField] private GameObject starsUI;
     [SerializeField] private GameObject pauseButtonUI;
 
@@ -61,7 +61,7 @@ public class CameraPhaseController : MonoBehaviour
     {
         SetCardBarVisible(false);
         SetPhaseButtonsVisible(isometricVisible: false, setupVisible: false);
-        nextLevelButton?.SetActive(false);
+        //nextLevelButton?.SetActive(false);
         SetGameplayHUDVisible(false);
         IsInSetupPhase = false;
     }
@@ -81,7 +81,7 @@ public class CameraPhaseController : MonoBehaviour
 
         SetCardBarVisible(false);
         SetPhaseButtonsVisible(isometricVisible: false, setupVisible: false);
-        nextLevelButton?.SetActive(false);
+        //nextLevelButton?.SetActive(false);
         cardSelectionManager?.ClearSelection();
 
         StartTransition(CurrentLevel.isometricViewPoint, onComplete: () =>
@@ -93,17 +93,18 @@ public class CameraPhaseController : MonoBehaviour
 
     public void ReturnToMainMenuView(Action onComplete = null)
     {
+        timeUI?.ResetTimer();
         isInSetupPhase = false;
         IsInSetupPhase = false;
 
         SetCardBarVisible(false);
         SetPhaseButtonsVisible(isometricVisible: false, setupVisible: false);
-        nextLevelButton?.SetActive(false);
+        //nextLevelButton?.SetActive(false);
         cardSelectionManager?.ClearSelection();
+        SetGameplayHUDVisible(false);
 
         StartTransitionToHome(onComplete: () =>
         {
-            SetGameplayHUDVisible(false);
             onComplete?.Invoke();
         });
     }
@@ -116,12 +117,13 @@ public class CameraPhaseController : MonoBehaviour
             return;
         }
 
-        nextLevelButton?.SetActive(true);
+        //nextLevelButton?.SetActive(true);
     }
 
     public void OnNextLevelButtonPressed()
     {
-        nextLevelButton?.SetActive(false);
+        timeUI?.ResetTimer();
+        //nextLevelButton?.SetActive(false);
         GoToLevel(currentLevelIndex + 1);
     }
 
@@ -178,7 +180,7 @@ public class CameraPhaseController : MonoBehaviour
 
     private void SetGameplayHUDVisible(bool visible)
     {
-        if (timeUI != null) timeUI.SetActive(visible);
+        if (timeUI != null) timeUI.gameObject.SetActive(visible);
         if (starsUI != null) starsUI.SetActive(visible);
         if (pauseButtonUI != null) pauseButtonUI.SetActive(visible);
     }

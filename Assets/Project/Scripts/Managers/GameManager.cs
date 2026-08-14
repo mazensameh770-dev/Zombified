@@ -9,17 +9,16 @@ public class GameManager : MonoBehaviour
 
     [SerializeField] private LevelController[] levels;
 
-    //public event Action OnNextTurn;
-    //public event Action OnSimulationEnd;
+    [SerializeField] private TimeUI timeUI;
 
     private LevelController currentLevel;
+    public LevelController CurrentLevel => currentLevel;
     public Transform CurrentLevelRoot => currentLevel != null ? currentLevel.transform : null;
     private Coroutine simulationRoutine;
 
     public int CurrentLevelIndex { get; private set; } = -1;
 
-    //private GridObject[] LevelObjects;
-    //[SerializeField] private int simulationTurns;
+    public event Action<float, int> OnLevelWon;
 
     private void Awake() {
         if (Instance == null) Instance = this;
@@ -63,11 +62,9 @@ public class GameManager : MonoBehaviour
 
     private IEnumerator SimulationRoutine()
     {
-        GridObject[] objects;
-
         for (int turn = 0; turn < currentLevel.SimulationTurns; turn++)
         {
-            objects = currentLevel.GetGridObjects();
+            GridObject[] objects = currentLevel.GetGridObjects();
 
             foreach (GridObject obj in objects)
             {
@@ -76,40 +73,34 @@ public class GameManager : MonoBehaviour
             }
 
             yield return new WaitForSeconds(1f);
+
+            if (currentLevel.HasWon())
+            {
+                WinLevel();
+                yield break;
+            }
         }
-
-        yield return new WaitForSeconds(2f);
-
-        currentLevel.ResetLevel();
 
         simulationRoutine = null;
     }
 
+    private void WinLevel()
+    {
+        simulationRoutine = null;
 
-    //public async void Simulate() {
-    //    //LevelObjects = FindObjectsByType<GridObject>(FindObjectsSortMode.None);
-    //    for (int i = 0; i < simulationTurns; i++) {
-    //        /*
-    //        foreach (var obj in LevelObjects) {
-    //            obj.PlayNextAction();
-    //        }
-    //        */
-    //        OnNextTurn?.Invoke();
-    //        await Task.Delay(1000);
-    //    }
-    //    await Task.Delay(2000);
-    //    OnSimulationEnd?.Invoke();
-    //    //ResetLevel();
-    //}
-    private void ResetLevel() {
-        /*
-        print("Game over, resetting");
-        foreach (var obj in LevelObjects) {
-            obj.gameObject.SetActive(true);
-            if (obj is Soldier) {
-                (obj as Soldier).ResetSoldier();
-            }
+        Time.timeScale = 0f;
+
+        float timeSpent = timeUI.GetTime();
+
+        int stars = currentLevel.CalculateStars(timeSpent);
+
+        LevelProgress.SaveStars(CurrentLevelIndex, stars);
+
+        if (CurrentLevelIndex + 1 < levels.Length)
+        {
+            LevelProgress.UnlockLevel(CurrentLevelIndex + 1);
         }
-        */
+
+        OnLevelWon?.Invoke(timeSpent, stars);
     }
 }

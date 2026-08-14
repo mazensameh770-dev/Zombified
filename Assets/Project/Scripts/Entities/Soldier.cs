@@ -81,6 +81,11 @@ public class Soldier : GridObject {
         canMove = true;
     }
 
+    public bool IsAlive()
+    {
+        return canMove;
+    }
+
     private void ShootZombie(GridTile targeted) {
         transform.LookAt(targeted.transform.position);
         animator.SetTrigger("shoot");

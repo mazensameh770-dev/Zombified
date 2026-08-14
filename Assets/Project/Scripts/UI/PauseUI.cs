@@ -33,14 +33,6 @@ public class PauseUI : MonoBehaviour
         gameObject.SetActive(true);
     }
 
-    private void Update()
-    {
-        if (Input.GetKeyDown(KeyCode.Escape))
-        {
-            ResumeGame();
-        }
-    }
-
     private void ResumeGame()
     {
         Time.timeScale = 1f;

@@ -1,3 +1,4 @@
+using System.Collections;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -8,10 +9,40 @@ public class LevelsUI : MonoBehaviour
 
     [Header("Level Buttons (index 0 = Level 1, index 1 = Level 2, ...)")]
     [SerializeField] private Button[] levelButtons;
+
     [SerializeField] private CameraPhaseController cameraPhaseController;
 
     [Header("Fade")]
     [SerializeField] private FadeUI fadeUI;
+
+    private LevelButtonStars[] levelButtonStars;
+
+    private void Awake()
+    {
+        levelButtonStars =
+            GetComponentsInChildren<LevelButtonStars>(true);
+    }
+
+    private void OnEnable()
+    {
+        StartCoroutine(RefreshNextFrame());
+    }
+
+    private IEnumerator RefreshNextFrame()
+    {
+        yield return null;
+
+        RefreshLevels();
+    }
+
+    public void RefreshLevels()
+    {
+        foreach (LevelButtonStars levelButton in levelButtonStars)
+        {
+            if (levelButton != null)
+                levelButton.UpdateLevel();
+        }
+    }
 
     private void Start()
     {
@@ -19,8 +50,11 @@ public class LevelsUI : MonoBehaviour
 
         for (int i = 0; i < levelButtons.Length; i++)
         {
-            int levelIndex = i; 
-            levelButtons[i].onClick.AddListener(() => SelectLevel(levelIndex));
+            int levelIndex = i;
+
+            levelButtons[i].onClick.AddListener(
+                () => SelectLevel(levelIndex)
+            );
         }
     }
 
@@ -33,7 +67,6 @@ public class LevelsUI : MonoBehaviour
     private void GoBack()
     {
         fadeUI.Hide();
-
         mainMenuUI.SetActive(true);
     }
 
@@ -43,7 +76,8 @@ public class LevelsUI : MonoBehaviour
 
         foreach (Button button in levelButtons)
         {
-            if (button != null) button.onClick.RemoveAllListeners();
+            if (button != null)
+                button.onClick.RemoveAllListeners();
         }
     }
 }

@@ -21,8 +21,6 @@ public class OptionsUI : MonoBehaviour
     [SerializeField] private FadeUI fadeUI;
 
     private const string VSyncKey = "VSyncEnabled";
-    private const string BackgroundVolumeKey = "BackgroundVolume";
-    private const string SFXVolumeKey = "SFXVolume";
 
     private bool vsyncEnabled;
 
@@ -35,22 +33,14 @@ public class OptionsUI : MonoBehaviour
 
         vsyncButton.onClick.AddListener(ToggleVSync);
 
-        LoadAudioSettings();
+        backgroundSlider.value = SoundManager.Instance.GetBackgroundVolume();
+        sfxSlider.value = SoundManager.Instance.GetSFXVolume();
 
         backgroundSlider.onValueChanged.AddListener(SetBackgroundVolume);
         sfxSlider.onValueChanged.AddListener(SetSFXVolume);
 
         backButton.onClick.AddListener(GoBack);
     }
-
-    private void Update()
-    {
-        if (Input.GetKeyDown(KeyCode.Escape))
-        {
-            GoBack();
-        }
-    }
-
     public void Open(GameObject caller)
     {
         parentUI = caller;
@@ -86,35 +76,14 @@ public class OptionsUI : MonoBehaviour
             vsyncEnabled ? vsyncOnSprite : vsyncOffSprite;
     }
 
-    private void LoadAudioSettings()
-    {
-        backgroundSlider.value =
-            PlayerPrefs.GetFloat(BackgroundVolumeKey, 1f);
-
-        sfxSlider.value =
-            PlayerPrefs.GetFloat(SFXVolumeKey, 1f);
-    }
-
     private void SetBackgroundVolume(float value)
     {
-        PlayerPrefs.SetFloat(BackgroundVolumeKey, value);
-        PlayerPrefs.Save();
+        SoundManager.Instance.SetBackgroundVolume(value);
     }
 
     private void SetSFXVolume(float value)
     {
-        PlayerPrefs.SetFloat(SFXVolumeKey, value);
-        PlayerPrefs.Save();
-    }
-
-    public float GetBackgroundVolume()
-    {
-        return PlayerPrefs.GetFloat(BackgroundVolumeKey, 1f);
-    }
-
-    public float GetSFXVolume()
-    {
-        return PlayerPrefs.GetFloat(SFXVolumeKey, 1f);
+        SoundManager.Instance.SetSFXVolume(value);
     }
 
     private void OnDestroy()

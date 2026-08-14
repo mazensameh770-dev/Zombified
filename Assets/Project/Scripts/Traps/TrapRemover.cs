@@ -53,6 +53,7 @@ public class TrapRemover : MonoBehaviour
     {
         if (hoveredTileWithTrap == null) return;
         hoveredTileWithTrap.RemoveObject();
+        SoundManager.Instance.PlayTrapRemove();
         HideButton();
     }
 }
