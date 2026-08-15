@@ -13,4 +13,4 @@ MonoBehaviour:
   m_Name: Desert 2
   m_EditorClassIdentifier: Assembly-CSharp::PathSO
   actionLength: 6
-  actions: 000000000100000000000000020000000000000001000000
+  actions: 000000000000000001000000020000000000000001000000

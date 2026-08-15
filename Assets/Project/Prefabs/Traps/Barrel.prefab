@@ -861,7 +861,7 @@ GameObject:
   - component: {fileID: 7922155126248382762}
   - component: {fileID: 2381620055996618773}
   m_Layer: 0
-  m_Name: ExplosiveBarrel
+  m_Name: Barrel
   m_TagString: Trap
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -897,3 +897,5 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::Trap
   range: 3
   trapEffect: {fileID: 11400000, guid: a2cb506a4141d3746b44e977a2fe6b7f, type: 2}
+  blocksSoldier: 1
+  soldierWarningMessage: You cannot place the barrel in the soldier's path!!

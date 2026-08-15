@@ -345,5 +345,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 89fd750191d309145b5c239803c839ba, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Trap
-  range: 3
+  range: 2
   trapEffect: {fileID: 11400000, guid: 5b1e39b2dfa38484faf5ee103079f81c, type: 2}
+  blocksSoldier: 0
+  soldierWarningMessage: 

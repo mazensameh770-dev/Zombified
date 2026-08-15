@@ -1,4 +1,5 @@
 using System;
+using DG.Tweening;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -49,14 +50,28 @@ public class PauseUI : MonoBehaviour
     private void ReturnToMainMenu()
     {
         Time.timeScale = 1f;
+
+        DOTween.KillAll();
+
+        if (GameManager.Instance != null)
+        {
+            GameManager.Instance.StopSimulationAndReset(true);
+        }
+
         ClearAllTraps();
-        fadeUI.Hide();
+
+        if (fadeUI != null) fadeUI.Hide();
         gameObject.SetActive(false);
 
         cameraPhaseController.ReturnToMainMenuView(() =>
         {
-            mainMenuUI.SetActive(true);
+            if (mainMenuUI != null) mainMenuUI.SetActive(true);
         });
+
+        if (CardSelectionManager.Instance != null)
+        {
+            CardSelectionManager.Instance.ClearSelection();
+        }
     }
 
     private void ClearAllTraps()

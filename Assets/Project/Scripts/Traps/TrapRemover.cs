@@ -27,7 +27,7 @@ public class TrapRemover : MonoBehaviour
             return;
         }
 
-        if (!Input.GetMouseButtonDown(0)) return; 
+        if (!Input.GetMouseButtonDown(0)) return;
 
         Ray ray = placementCamera.ScreenPointToRay(Input.mousePosition);
 
@@ -55,5 +55,10 @@ public class TrapRemover : MonoBehaviour
         hoveredTileWithTrap.RemoveObject();
         SoundManager.Instance.PlayTrapRemove();
         HideButton();
+
+        if (CardSelectionManager.Instance != null)
+        {
+            CardSelectionManager.Instance.UpdateAllCardsForCurrentLevel();
+        }
     }
 }

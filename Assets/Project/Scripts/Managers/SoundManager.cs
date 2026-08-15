@@ -15,6 +15,7 @@ public class SoundManager : MonoBehaviour
     [Header("Gameplay Sounds")]
     [SerializeField] private AudioClip trapPlaceClip;
     [SerializeField] private AudioClip trapRemoveClip;
+    [SerializeField] private AudioClip trapClearClip;
 
     private const string BackgroundVolumeKey = "BackgroundVolume";
     private const string SFXVolumeKey = "SFXVolume";
@@ -86,5 +87,9 @@ public class SoundManager : MonoBehaviour
     public void PlayTrapRemove()
     {
         sfxSource.PlayOneShot(trapRemoveClip);
+    }
+    public void PlayTrapClear()
+    {
+        sfxSource.PlayOneShot(trapClearClip);
     }
 }

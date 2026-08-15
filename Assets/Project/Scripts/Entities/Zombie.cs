@@ -9,73 +9,102 @@ public class Zombie : GridObject
     private GridTile target = null;
     private int health = 4;
     private bool canMove = true;
-    protected override void PlayNextAction() {
+
+    protected override void PlayNextAction()
+    {
         if (!canMove) return;
         target = null;
         GridObject.StartSearching(currentGridTile, range, tile => {
             GridObject obj = tile.GetCurrentObject();
-            if (obj != null && target == null && obj is Soldier) {
+            if (obj != null && target == null && obj is Soldier)
+            {
                 target = obj.GetCurrentTile();
             }
         });
-        if (target != null) {
+        if (target != null)
+        {
             CheckingDirection();
         }
     }
-    protected override void ResetObject() {
+
+    protected override void ResetObject()
+    {
+        transform.DOKill();
         Destroy(gameObject);
     }
-    public override void TakeDamage(int damage) {
-        // Zombies don't die. but they take damage instead
+
+    public override void TakeDamage(int damage)
+    {
         health -= damage;
-        if (health <= 0) {
+        if (health <= 0)
+        {
             die();
         }
     }
-    private void die() {
-        animator.SetTrigger("die");
+
+    private void die()
+    {
         canMove = false;
+        if (animator != null)
+        {
+            animator.SetTrigger("die");
+        }
     }
-    private void CheckingDirection() {
+
+    private void CheckingDirection()
+    {
         Vector3 direction = (target.transform.position - currentGridTile.transform.position).normalized;
 
-        // 3. Compare forward/back (Z axis) vs right/left (X axis) magnitude
         GridTile targetedTile = null;
-        if (Mathf.Abs(direction.z) >= Mathf.Abs(direction.x)) {
-            if (direction.z >= 0) {
+        if (Mathf.Abs(direction.z) >= Mathf.Abs(direction.x))
+        {
+            if (direction.z >= 0)
+            {
                 targetedTile = currentGridTile.GetFront();
                 transform.DORotate(Vector3.zero, 0.25f);
-            } else {
+            }
+            else
+            {
                 targetedTile = currentGridTile.GetBack();
                 transform.DORotate(new Vector3(0, 180, 0), 0.25f);
             }
-            /*
-                targetedTile =
-                    (direction.z >= 0) ? currentGridTile.GetFront() : currentGridTile.GetBack();
-            */
-        } else {
-            if (direction.x >= 0) {
+        }
+        else
+        {
+            if (direction.x >= 0)
+            {
                 targetedTile = currentGridTile.GetRight();
                 transform.DORotate(new Vector3(0, 90, 0), 0.25f);
-            } else {
+            }
+            else
+            {
                 targetedTile = currentGridTile.GetLeft();
                 transform.DORotate(new Vector3(0, -90, 0), 0.25f);
             }
-            /*
-            targetedTile =
-                (direction.x >= 0) ? currentGridTile.GetRight() : currentGridTile.GetLeft();
-            */
         }
         Moving(targetedTile);
     }
-    private async void Moving(GridTile targetTile) {
-        print("Zombie moving");
-        animator.SetBool("walk", true);
+
+    private async void Moving(GridTile targetTile)
+    {
+        if (animator != null) animator.SetBool("walk", true);
         currentGridTile.MoveObject(targetTile);
+
         await Task.Delay(500);
-        animator.SetBool("walk", false);
+
+        if (this != null && gameObject != null && animator != null)
+        {
+            animator.SetBool("walk", false);
+        }
     }
-    public bool IsAlive() {
+
+    public bool IsAlive()
+    {
         return canMove;
+    }
+
+    private void OnDestroy()
+    {
+        transform.DOKill();
     }
 }

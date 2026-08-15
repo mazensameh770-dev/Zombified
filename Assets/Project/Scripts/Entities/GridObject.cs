@@ -8,13 +8,10 @@ public abstract class GridObject : MonoBehaviour
     protected GridTile currentGridTile;
     [SerializeField] protected int range;
     public GridTile CurrentGridTile => currentGridTile;
+
     protected virtual void Start()
     {
     }
-    //private void OnDestroy() {
-    //    GameManager.Instance.OnNextTurn -= PlayNextAction;
-    //    GameManager.Instance.OnSimulationEnd -= ResetObject;
-    //}
 
     public void PlayTurn()
     {
@@ -26,50 +23,62 @@ public abstract class GridObject : MonoBehaviour
         ResetObject();
     }
 
-    public GridTile GetCurrentTile() {
+    public GridTile GetCurrentTile()
+    {
         return currentGridTile;
     }
-    public virtual void ObjectPlaced(GridTile tile) {
+
+    public virtual void ObjectPlaced(GridTile tile)
+    {
         currentGridTile = tile;
         transform.position = tile.transform.position;
     }
-    public virtual void ObjectRemoved(GridTile tile) {
+
+    public virtual void ObjectRemoved(GridTile tile)
+    {
         currentGridTile = null;
     }
-    protected virtual void PlayNextAction() {
-        // Default implementation does nothing
-    }
-    protected virtual void ResetObject() {
 
+    protected virtual void PlayNextAction()
+    {
     }
-    public virtual void SteppedOn(GridObject soldier) {
-        // Default implementation does nothing
-    }
-    public virtual void TakeDamage(int damage) {
+
+    protected virtual void ResetObject()
+    {
 
     }
 
-    public int getRange() {
+    public virtual void SteppedOn(GridObject soldier)
+    {
+    }
+
+    public virtual void TakeDamage(int damage)
+    {
+
+    }
+
+    public int getRange()
+    {
         return range;
     }
 
-    public static void StartSearching(GridTile startTile, int range, Action<GridTile> action) {
+    public static void StartSearching(GridTile startTile, int range, Action<GridTile> action)
+    {
         if (startTile == null || range <= 0 || action == null) return;
 
-        // Use a local HashSet for O(1) contains checks and to avoid static shared state.
         var visited = new HashSet<GridTile>();
         var queue = new Queue<(GridTile tile, int remainingRange)>();
         queue.Enqueue((startTile, range));
 
-        while (queue.Count > 0) {
+        while (queue.Count > 0)
+        {
             var (tile, remaining) = queue.Dequeue();
             if (tile == null || remaining < 0) continue;
 
-            // visited.Add returns false if already present -> skip duplicates
             if (!visited.Add(tile)) continue;
 
-            // Skip calling the action for the starting tile only
-            if (!ReferenceEquals(tile, startTile)) {
+            if (!ReferenceEquals(tile, startTile))
+            {
                 action(tile);
             }
 

@@ -25,6 +25,7 @@ public class SimulationUI : MonoBehaviour
         if (GameManager.Instance != null)
         {
             GameManager.Instance.OnSimulationStarted += HandleSimulationStarted;
+            GameManager.Instance.OnSimulationEnded += HandleSimulationEnded;
             GameManager.Instance.OnLevelReset += HandleLevelReset;
         }
     }
@@ -43,6 +44,8 @@ public class SimulationUI : MonoBehaviour
         {
             GameManager.Instance.StopSimulationAndReset(false);
         }
+
+        HandleLevelReset();
     }
 
     private void OnEditClicked()
@@ -65,9 +68,21 @@ public class SimulationUI : MonoBehaviour
     private void HandleSimulationStarted()
     {
         if (resetButton != null)
+            resetButton.gameObject.SetActive(false);
+        if (simulateButton != null)
+            simulateButton.gameObject.SetActive(false);
+        if (editButton != null)
+            editButton.gameObject.SetActive(false);
+    }
+
+    private void HandleSimulationEnded()
+    {
+        if (resetButton != null)
             resetButton.gameObject.SetActive(true);
         if (simulateButton != null)
             simulateButton.gameObject.SetActive(false);
+        if (editButton != null)
+            editButton.gameObject.SetActive(false);
     }
 
     private void HandleLevelReset()
@@ -76,6 +91,8 @@ public class SimulationUI : MonoBehaviour
             resetButton.gameObject.SetActive(false);
         if (simulateButton != null)
             simulateButton.gameObject.SetActive(true);
+        if (editButton != null)
+            editButton.gameObject.SetActive(true);
     }
 
     private void OnDestroy()
@@ -92,6 +109,7 @@ public class SimulationUI : MonoBehaviour
         if (GameManager.Instance != null)
         {
             GameManager.Instance.OnSimulationStarted -= HandleSimulationStarted;
+            GameManager.Instance.OnSimulationEnded -= HandleSimulationEnded;
             GameManager.Instance.OnLevelReset -= HandleLevelReset;
         }
     }

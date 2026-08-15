@@ -7,45 +7,42 @@ public class GridTile : MonoBehaviour
     public bool isBlocked = false;
 
     private GridObject currentObject;
-    private GridObject temp;
 
     public GridTile[] neighbors = new GridTile[4];
 
-    public GridTile GetFront()
-    {
-        return (neighbors != null && neighbors.Length > 0) ? neighbors[0] : null;
-    }
+    public GridTile GetFront() => (neighbors != null && neighbors.Length > 0) ? neighbors[0] : null;
+    public GridTile GetBack() => (neighbors != null && neighbors.Length > 1) ? neighbors[1] : null;
+    public GridTile GetRight() => (neighbors != null && neighbors.Length > 2) ? neighbors[2] : null;
+    public GridTile GetLeft() => (neighbors != null && neighbors.Length > 3) ? neighbors[3] : null;
 
-    public GridTile GetBack()
+    public void PlaceObject(GridObject obj, GridTile sourceTile = null)
     {
-        return (neighbors != null && neighbors.Length > 1) ? neighbors[1] : null;
-    }
+        if (obj == null) return;
 
-    public GridTile GetRight()
-    {
-        return (neighbors != null && neighbors.Length > 2) ? neighbors[2] : null;
-    }
-
-    public GridTile GetLeft()
-    {
-        return (neighbors != null && neighbors.Length > 3) ? neighbors[3] : null;
-    }
-
-    //public void SetPlacedTrap(GameObject trap, TrapCardData sourceCardData)
-    public void PlaceObject(GridObject obj)
-    {
-        if (currentObject != null) {
-            if (obj is Soldier && currentObject is Trap) {
-                currentObject.SteppedOn(obj);
+        if (currentObject != null)
+        {
+            if (currentObject is Trap trap)
+            {
+                if (obj is Soldier)
+                {
+                    trap.SteppedOn(obj);
+                    return;
+                }
+                else if (obj is Zombie)
+                {
+                    trap.DeactivateTrap();
+                    currentObject = obj;
+                    currentObject.ObjectPlaced(this);
+                    trap.SteppedOn(obj);
+                    return;
+                }
+            }
+            else if (obj is Zombie && currentObject is Soldier)
+            {
+                GridObject soldierObj = currentObject;
+                currentObject = null;
+                ZombieManager.Instance.Zombifying(this, soldierObj, sourceTile);
                 return;
-            } else if (obj is Zombie && currentObject is Trap) {
-                currentObject.SteppedOn(obj);
-                temp = currentObject;
-                // don't return
-            } else if (obj is Zombie && currentObject is Soldier) {
-                ZombieManager.Instance.Zombifying(this, currentObject);
-                temp = currentObject;
-                // don't return
             }
         }
         currentObject = obj;
@@ -56,26 +53,35 @@ public class GridTile : MonoBehaviour
     {
         if (currentObject == null) return;
 
-        currentObject.ObjectRemoved(this);
-        if (destroy) {
-            Destroy(currentObject.gameObject);
+        GridObject objToRemove = currentObject;
+        currentObject = null;
+
+        objToRemove.ObjectRemoved(this);
+        if (destroy)
+        {
+            Destroy(objToRemove.gameObject);
         }
-        if (temp != null) {
-            currentObject = temp;
-            temp = null;
-        } else currentObject = null;
     }
+
     public void MoveObject(GridTile targetTile)
     {
-        currentObject.transform.DOMove(targetTile.transform.position, 0.5f).SetEase(Ease.Linear).OnComplete(() =>
-        {
-            currentObject.ObjectRemoved(this);
-            targetTile.PlaceObject(currentObject);
-            currentObject = null;
-        });
+        if (currentObject == null || targetTile == null) return;
+
+        GridObject objToMove = currentObject;
+        GridTile sourceTile = this;
+
+        objToMove.transform.DOMove(targetTile.transform.position, 0.5f)
+            .SetEase(Ease.Linear)
+            .OnComplete(() =>
+            {
+                if (objToMove != null && objToMove.gameObject != null)
+                {
+                    objToMove.ObjectRemoved(sourceTile);
+                    targetTile.PlaceObject(objToMove, sourceTile);
+                    if (currentObject == objToMove) currentObject = null;
+                }
+            });
     }
-    public GridObject GetCurrentObject()
-    {
-        return currentObject;
-    }
+
+    public GridObject GetCurrentObject() => currentObject;
 }

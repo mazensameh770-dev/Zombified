@@ -82,12 +82,32 @@ public class LevelController : MonoBehaviour
     {
         if (trapLimits == null || data == null) return 0;
 
+        int maxLimit = 0;
+        bool found = false;
+
         foreach (var limit in trapLimits)
         {
             if (limit.trapData == data)
-                return limit.count;
+            {
+                maxLimit = limit.count;
+                found = true;
+                break;
+            }
         }
 
-        return 0;
+        if (!found) return 0;
+
+        Trap[] placedTraps = GetComponentsInChildren<Trap>();
+        int placedCount = 0;
+
+        foreach (Trap trap in placedTraps)
+        {
+            if (trap != null && trap.gameObject.activeInHierarchy && trap.GetCurrentTile() != null && trap.TrapData == data)
+            {
+                placedCount++;
+            }
+        }
+
+        return Mathf.Max(0, maxLimit - placedCount);
     }
 }

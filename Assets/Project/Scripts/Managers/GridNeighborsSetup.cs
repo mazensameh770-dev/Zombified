@@ -4,7 +4,6 @@ using UnityEngine;
 public class GridNeighborsSetup : MonoBehaviour
 {
     [SerializeField] private float tileSize = 1.0f;
-    [SerializeField] private LayerMask tileLayer;
 
     private void Start()
     {
@@ -17,52 +16,35 @@ public class GridNeighborsSetup : MonoBehaviour
 
         foreach (GridTile tile in allTiles)
         {
-            SetupNeighborsForTile(tile);
+            SetupNeighborsForTile(tile, allTiles);
         }
     }
 
-    //private void SetupNeighborsForTile(GridTile tile)
-    //{
-    //    List<GridTile> neighborList = new List<GridTile>();
-    //    Vector3[] directions = { Vector3.forward, Vector3.back, Vector3.right, Vector3.left };
-
-    //    foreach (Vector3 dir in directions)
-    //    {
-    //        if (Physics.Raycast(tile.transform.position, dir, out RaycastHit hit, tileSize, tileLayer))
-    //        {
-    //            GridTile neighborTile = hit.collider.GetComponent<GridTile>();
-    //            if (neighborTile != null)
-    //            {
-    //                neighborList.Add(neighborTile);
-    //            }
-    //        }
-    //    }
-
-    //    tile.neighbors = neighborList.ToArray();
-    //}
-
-    private void SetupNeighborsForTile(GridTile tile)
+    private void SetupNeighborsForTile(GridTile tile, GridTile[] allTiles)
     {
-        Vector3[] directions =
-        {
-        Vector3.forward, // 0 = Front
-        Vector3.back,    // 1 = Back
-        Vector3.right,   // 2 = Right
-        Vector3.left     // 3 = Left
-    };
-
         GridTile[] neighbors = new GridTile[4];
 
-        for (int i = 0; i < directions.Length; i++)
+        foreach (GridTile other in allTiles)
         {
-            if (Physics.Raycast(
-                tile.transform.position,
-                directions[i],
-                out RaycastHit hit,
-                tileSize,
-                tileLayer))
+            if (other == tile) continue;
+
+            Vector3 diff = other.transform.position - tile.transform.position;
+
+            if (Mathf.Abs(diff.x) < 0.3f && Mathf.Abs(diff.z - tileSize) < 0.3f)
             {
-                neighbors[i] = hit.collider.GetComponent<GridTile>();
+                neighbors[0] = other;
+            }
+            else if (Mathf.Abs(diff.x) < 0.3f && Mathf.Abs(diff.z + tileSize) < 0.3f)
+            {
+                neighbors[1] = other;
+            }
+            else if (Mathf.Abs(diff.z) < 0.3f && Mathf.Abs(diff.x - tileSize) < 0.3f)
+            {
+                neighbors[2] = other;
+            }
+            else if (Mathf.Abs(diff.z) < 0.3f && Mathf.Abs(diff.x + tileSize) < 0.3f)
+            {
+                neighbors[3] = other;
             }
         }
 

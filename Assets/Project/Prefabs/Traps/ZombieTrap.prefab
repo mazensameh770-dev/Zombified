@@ -4898,6 +4898,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::Trap
   range: 0
   trapEffect: {fileID: 11400000, guid: 760bdbf7844d48b43b526a1e4afe8220, type: 2}
+  blocksSoldier: 0
+  soldierWarningMessage: 
 --- !u!1 &7437972889315557769
 GameObject:
   m_ObjectHideFlags: 0

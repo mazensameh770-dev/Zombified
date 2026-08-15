@@ -12,5 +12,5 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: dc1f07e3655826344b3add690aa17acd, type: 3}
   m_Name: Hell 5
   m_EditorClassIdentifier: Assembly-CSharp::PathSO
-  actionLength: 4
-  actions: 03000000000000000000000002000000
+  actionLength: 6
+  actions: 030000000000000001000000000000000200000000000000

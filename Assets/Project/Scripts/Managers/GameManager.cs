@@ -1,3 +1,4 @@
+using DG.Tweening;
 using System;
 using System.Collections;
 using UnityEngine;
@@ -91,6 +92,7 @@ public class GameManager : MonoBehaviour
     public void StopSimulationAndReset(bool resetTimer)
     {
         Time.timeScale = 1f;
+        DOTween.KillAll();
         StopSimulationOnly();
 
         if (currentLevel != null)
@@ -112,6 +114,7 @@ public class GameManager : MonoBehaviour
         {
             StopCoroutine(simulationRoutine);
             simulationRoutine = null;
+            OnSimulationEnded?.Invoke();
         }
     }
 

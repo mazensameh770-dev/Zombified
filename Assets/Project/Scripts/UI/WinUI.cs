@@ -69,6 +69,11 @@ public class WinUI : MonoBehaviour
 
         DOTween.KillAll();
 
+        if (GameManager.Instance != null)
+        {
+            GameManager.Instance.StopSimulationAndReset(true);
+        }
+
         ClearAllTraps();
 
         if (fadeUI != null)

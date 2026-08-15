@@ -21,6 +21,11 @@ public class ClearAllTrapsButton : MonoBehaviour
             GridTile tile = trap.GetCurrentTile();
             if (tile != null) tile.RemoveObject();
         }
+
+        if (CardSelectionManager.Instance != null)
+        {
+            CardSelectionManager.Instance.UpdateAllCardsForCurrentLevel();
+        }
     }
 
     private void OnDestroy()
