@@ -31,8 +31,15 @@ public class Zombie : GridObject
     protected override void ResetObject()
     {
         transform.DOKill();
-        currentGridTile?.RemoveObject();
-        //Destroy(gameObject);
+        if (currentGridTile != null)
+        {
+            currentGridTile.RemoveObject();
+        }
+        else
+        {
+            Destroy(gameObject);
+        }
+            
     }
 
     public override void TakeDamage(int damage)

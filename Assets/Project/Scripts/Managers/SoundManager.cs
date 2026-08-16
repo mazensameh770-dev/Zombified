@@ -16,6 +16,7 @@ public class SoundManager : MonoBehaviour
     [SerializeField] private AudioClip trapPlaceClip;
     [SerializeField] private AudioClip trapRemoveClip;
     [SerializeField] private AudioClip trapClearClip;
+    [SerializeField] private AudioClip winClip;
 
     private const string BackgroundVolumeKey = "BackgroundVolume";
     private const string SFXVolumeKey = "SFXVolume";
@@ -82,6 +83,10 @@ public class SoundManager : MonoBehaviour
     public void PlayTrapPlace()
     {
         sfxSource.PlayOneShot(trapPlaceClip);
+    }
+    public void PlayWin()
+    {
+        sfxSource.PlayOneShot(winClip);
     }
 
     public void PlayTrapRemove()

@@ -84583,6 +84583,7 @@ MonoBehaviour:
   trapPlaceClip: {fileID: 8300000, guid: 3d9fd6001781135459ccb88b8e155fd0, type: 3}
   trapRemoveClip: {fileID: 8300000, guid: 0593ad651f9bc76458c9be3f25d30f33, type: 3}
   trapClearClip: {fileID: 8300000, guid: 0593ad651f9bc76458c9be3f25d30f33, type: 3}
+  winClip: {fileID: 8300000, guid: 9d4cd1ff428a04240a4c272fa7b65521, type: 3}
 --- !u!1001 &2138388561
 PrefabInstance:
   m_ObjectHideFlags: 0

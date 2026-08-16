@@ -153,7 +153,7 @@ public class GameManager : MonoBehaviour
         {
             LevelProgress.UnlockLevel(CurrentLevelIndex + 1);
         }
-
+        SoundManager.Instance.PlayWin();
         OnLevelWon?.Invoke(timeSpent, stars);
     }
 }
