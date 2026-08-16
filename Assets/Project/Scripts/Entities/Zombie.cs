@@ -23,6 +23,7 @@ public class Zombie : GridObject
         });
         if (target != null)
         {
+            GameManager.Instance.CheckSum();
             CheckingDirection();
         }
     }

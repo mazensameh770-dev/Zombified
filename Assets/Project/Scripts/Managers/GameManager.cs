@@ -24,6 +24,8 @@ public class GameManager : MonoBehaviour
     public event Action OnSimulationEnded;
     public event Action OnLevelReset;
 
+    private bool checksum = true;
+
     private void Awake()
     {
         if (Instance == null) Instance = this;
@@ -66,8 +68,9 @@ public class GameManager : MonoBehaviour
 
     private IEnumerator SimulationRoutine()
     {
-        for (int turn = 0; turn < currentLevel.SimulationTurns; turn++)
+        while (checksum)
         {
+            checksum = false;
             GridObject[] objects = currentLevel.GetGridObjects();
 
             foreach (GridObject obj in objects)
@@ -87,6 +90,9 @@ public class GameManager : MonoBehaviour
 
         simulationRoutine = null;
         OnSimulationEnded?.Invoke();
+    }
+    public void CheckSum() {
+        checksum = true;
     }
 
     public void StopSimulationAndReset(bool resetTimer)
