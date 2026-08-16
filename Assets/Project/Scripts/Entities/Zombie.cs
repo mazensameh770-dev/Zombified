@@ -23,6 +23,7 @@ public class Zombie : GridObject
         });
         if (target != null)
         {
+            GameManager.Instance.CheckSum();
             CheckingDirection();
         }
     }
@@ -30,7 +31,8 @@ public class Zombie : GridObject
     protected override void ResetObject()
     {
         transform.DOKill();
-        Destroy(gameObject);
+        currentGridTile?.RemoveObject();
+        //Destroy(gameObject);
     }
 
     public override void TakeDamage(int damage)

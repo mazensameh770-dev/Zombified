@@ -79,7 +79,7 @@ public class Soldier : GridObject
     protected override void PlayNextAction()
     {
         if (!canMove) return;
-        if (myPath == null || myPath.actions == null || currentActionIndex >= myPath.actions.Length) return;
+        if (myPath == null || myPath.actions == null) return;
 
         distracted = false;
         GridObject.StartSearching(currentGridTile, range, tile => {
@@ -87,13 +87,16 @@ public class Soldier : GridObject
             GridObject obj = tile.GetCurrentObject();
             if (obj is Zombie zombie && zombie.IsAlive())
             {
+                GameManager.Instance.CheckSum();
                 ShootZombie(tile);
                 distracted = true;
             }
         });
 
         if (distracted) return;
+        if (currentActionIndex >= myPath.actions.Length) return;
 
+        GameManager.Instance.CheckSum();
         ActionType actionToExecute = myPath.actions[currentActionIndex];
         currentActionIndex++;
         ExecuteAction(actionToExecute);

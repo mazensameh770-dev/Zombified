@@ -28,6 +28,8 @@ public abstract class TrapEffect {
     public virtual void ChainedEffect(Trap trap) { }
     protected void ApplyExplosion(Trap trap) {
         GridTile currentTile = trap.GetCurrentTile();
+        if (ParticlesManager.Instance != null)
+            ParticlesManager.Instance.SpawnExplosion(currentTile);
         GridObject.StartSearching(currentTile, trap.getRange(), (tile) => {
             GridObject obj = tile.GetCurrentObject();
             //Debug.Log($"Checking tile {tile.gameObject.name}");

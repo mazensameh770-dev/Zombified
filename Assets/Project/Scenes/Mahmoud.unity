@@ -299,7 +299,6 @@ MonoBehaviour:
   cardDeckSpreader: {fileID: 23160698}
   isometricPhaseButtons: []
   setupPhaseButtons: []
-  nextLevelButton: {fileID: 0}
   timeUI: {fileID: 0}
   starsUI: {fileID: 0}
   pauseButtonUI: {fileID: 0}
@@ -907,9 +906,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::GridNeighborsSetup
   tileSize: 1
-  tileLayer:
-    serializedVersion: 2
-    m_Bits: 64
 --- !u!4 &297554247
 Transform:
   m_ObjectHideFlags: 0
@@ -1713,7 +1709,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e1ce55b8a2233f444983f8172f06abdf, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::GameManager
-  simulationTurns: 8
+  levels: []
+  timeUI: {fileID: 0}
 --- !u!4 &743704928
 Transform:
   m_ObjectHideFlags: 0
@@ -4609,6 +4606,63 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 421318c07ebea3845af49efbf57b77d7, type: 3}
+--- !u!1001 &4471901300658475869
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    serializedVersion: 3
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: 4860195442536464585, guid: d9d9466d351d4af409d16cd11c4b69a2, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4860195442536464585, guid: d9d9466d351d4af409d16cd11c4b69a2, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4860195442536464585, guid: d9d9466d351d4af409d16cd11c4b69a2, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4860195442536464585, guid: d9d9466d351d4af409d16cd11c4b69a2, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 0.7071068
+      objectReference: {fileID: 0}
+    - target: {fileID: 4860195442536464585, guid: d9d9466d351d4af409d16cd11c4b69a2, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: -0.7071068
+      objectReference: {fileID: 0}
+    - target: {fileID: 4860195442536464585, guid: d9d9466d351d4af409d16cd11c4b69a2, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4860195442536464585, guid: d9d9466d351d4af409d16cd11c4b69a2, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4860195442536464585, guid: d9d9466d351d4af409d16cd11c4b69a2, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: -90
+      objectReference: {fileID: 0}
+    - target: {fileID: 4860195442536464585, guid: d9d9466d351d4af409d16cd11c4b69a2, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4860195442536464585, guid: d9d9466d351d4af409d16cd11c4b69a2, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6551995431460330364, guid: d9d9466d351d4af409d16cd11c4b69a2, type: 3}
+      propertyPath: m_Name
+      value: FX_Explosion_Rubble
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: d9d9466d351d4af409d16cd11c4b69a2, type: 3}
 --- !u!1660057539 &9223372036854775807
 SceneRoots:
   m_ObjectHideFlags: 0
@@ -4627,3 +4681,4 @@ SceneRoots:
   - {fileID: 1525409313}
   - {fileID: 297554247}
   - {fileID: 743704928}
+  - {fileID: 4471901300658475869}
