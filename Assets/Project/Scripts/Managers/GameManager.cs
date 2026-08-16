@@ -68,6 +68,7 @@ public class GameManager : MonoBehaviour
 
     private IEnumerator SimulationRoutine()
     {
+        CheckSum();
         while (checksum)
         {
             checksum = false;
