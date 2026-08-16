@@ -1,227 +1,170 @@
-# 🧪 DUNGEON APOTHECARY
+# Zombified
 
-A charming Unity-based management game where you craft potions to heal visiting monsters before they lose patience and cause trouble!
+![Banner](https://raw.githubusercontent.com/mazensameh770-dev/Zombified/main/Assets/Screenshots/banner.png)
 
----
-
-## 🎮 Game Overview
-
-**DUNGEON APOTHECARY** is a fast-paced, time-management game where players run a potion shop that caters to sick monsters. Your job is simple: identify what each monster needs, gather the right ingredients, brew the perfect potion at your crafting table, and deliver it before they get too impatient. Mess up? Take damage. Survive long enough and watch the difficulty ramp up!
-
-### Core Gameplay Loop
-
-1. **Monsters arrive** at your shop with different ailments
-2. **Check their recipe** – each monster needs a specific cure
-3. **Gather ingredients** from your stock
-4. **Craft the potion** at your crafting table
-5. **Deliver it** to the monster before they lose patience
-6. **Receive rewards** and prepare for the next patient
+**Zombified** is a top‑down, grid‑based zombie‑survival game built with Unity.  Players control a soldier, navigate a procedurally generated grid, and battle waves of zombies while using traps and special abilities.
 
 ---
 
-## 🏗️ Game Architecture
-
-### State Machine Pattern
-
-The game uses a robust **state machine** for monster behavior, making it easy to manage complex AI. Each monster cycles through different emotional states:
-
-- **Waiting State** – Monster arrives and patiently waits for their cure
-- **Angry State** – Patience running out! They're getting frustrated
-- **Chasing State** – They're so mad they're chasing the player
-- **Calming State** – They received the correct cure and are being soothed
-- **Exiting State** – Fully healed and leaving the shop
-
-This modular approach means adding new behaviors is as simple as creating a new state class.
-
-### Manager System
-
-The game relies on several core managers (implemented as singletons) to coordinate all the chaos:
-
-#### **GameManager**
-The central command center that tracks:
-- Game over conditions
-- Pause/resume functionality
-- Progressive difficulty scaling
-- Monster patience and spawn rates that decrease over time
-
-Every 3 monsters served, their patience gets shorter. Every 5 monsters served, they arrive faster. The game gets harder the better you do!
-
-#### **DeliveryManager**
-Handles the critical moment – the potion handoff:
-- Checks if the delivered cure is correct
-- Triggers success or failure events
-- Tracks correct deliveries, wrong deliveries, and empty attempts
-
-#### **SpawnManager**
-Spawns monsters on a timer that dynamically adjusts based on game progression. Early on, you have breathing room. Later? You'll be juggling multiple patients at once.
-
-#### **ScoreManager & SaveManager**
-Track your performance and persist progress between sessions, so players can compete for high scores.
-
-#### **AudioManager**
-Manages all sound effects and background music with a unified, event-driven system.
+## Table of Contents
+- [Features](#features)
+- [Installation & Running](#installation--running)
+- [Gameplay Controls](#gameplay-controls)
+- [Project Structure](#project-structure)
+- [Key Scripts & Architecture](#key-scripts--architecture)
+- [UML Diagram](#uml-diagram)
+- [Contributing](#contributing)
+- [License](#license)
 
 ---
 
-## 🧩 Core Systems
+## Features
+- Grid‑based movement with path‑finding.
+- Dynamic zombie AI with multiple behaviours.
+- Soldier abilities & upgrade cards (CardSelectionManager).
+- Variety of traps and trap effects (ScriptableObjects).
+- Particle effects and sound management.
+- Custom input actions using Unity Input System.
+- Modular architecture – managers, entities, scriptable objects.
 
-### Inventory System
+---
 
-The player has a limited inventory where they can hold items (ingredients and crafted potions). 
+## Installation & Running
+1. **Prerequisites**
+   - Unity Hub (recommended version 2021.3 LTS or later).
+   - Unity packages: `Input System`, `TextMeshPro` (listed in `Packages/manifest.json`).
+2. **Clone the repository**
+   ```bash
+   git clone https://github.com/mazensameh770-dev/Zombified.git
+   cd Zombified
+   ```
+3. **Open the project**
+   - Launch Unity Hub → *Add* → select the project folder `Zombified`.
+   - Unity will import assets; this may take a minute.
+4. **Play the game**
+   - Open the starting scene `Assets/Scenes/Main.unity` (or the scene indicated in `ProjectSettings/EditorBuildSettings.asset`).
+   - Press **Play** in the Unity editor.
+5. **Build (optional)**
+   - `File → Build Settings…` → add the desired scenes → choose platform → *Build*.
 
-**Key Features:**
-- Finite slot count forces strategic item management
-- Players must strategically drop items if slots are full
-- Visual UI shows what items are currently held
+---
 
-### Crafting System
+## Gameplay Controls
+| Action | Keyboard / Mouse |
+|--------|-------------------|
+| Move   | `W A S D` or Arrow keys |
+| Aim / Look   | Mouse movement |
+| Shoot / Attack | Left Mouse Button |
+| Use Ability / Card | `Space` |
+| Place Trap | `E` |
+| Pause | `Esc` |
 
-The **CraftingTable** is the heart of production:
+---
 
-1. **Recipe Matching** – The table automatically checks if your inventory contains all required ingredients
-2. **Crafting Timer** – Once ingredients are consumed, a timer starts (default 3 seconds)
-3. **Item Retrieval** – Once complete, you pick up the finished potion
-4. **State Management** – The UI shows clear visual feedback about what's happening
-
+## Project Structure
 ```
-Player Interacts → Check Ingredients → Consume Items → Start Timer → Craft Complete → Pick Up Potion
+Zombified/
+├─ Assets/
+│   ├─ Animations/          # Animator controllers & animation clips
+│   ├─ Art/                  # 3D models, textures
+│   ├─ Materials/            # Material assets
+│   ├─ Particles/            # Particle system prefabs
+│   ├─ Prefabs/              # Ready‑to‑instantiate game objects
+│   ├─ Scenes/               # Unity scenes (Main.unity, etc.)
+│   ├─ ScriptableObjects/    # Data‑only objects (PathSO, TrapEffectSO, …)
+│   ├─ Scripts/              # C# source files
+│   │   ├─ Core/              # Core utilities (Singleton, etc.)
+│   │   ├─ Managers/          # GameManager, ZombieManager, SoundManager, …
+│   │   ├─ Entities/          # Soldier, Zombie, Trap, GridObject
+│   │   ├─ UI/                # UI managers & panels
+│   │   └─ Interfaces/        # Interface definitions
+│   └─ UI/                    # UI prefabs & canvases
+├─ Packages/                  # Unity package manifest
+├─ ProjectSettings/           # Editor & player settings
+└─ README.md                 # **This file**
 ```
 
-### Recipe System
+---
 
-Each monster has a **MonsterRecipe** that defines:
-- The specific **cure they need** (ItemSO)
-- The **ingredients required** to craft that cure
-- Validation logic to check if a delivered item is correct
+## Key Scripts & Architecture
+| Folder | Important Scripts | Responsibility |
+|--------|------------------|----------------|
+| **Core** | `Singleton.cs` | Generic singleton base class used by most managers. |
+| **Managers** | `GameManager.cs` – overall game flow, state machine.<br>`ZombieManager.cs` – spawning and tracking zombies.<br>`SoundManager.cs` – centralized audio playback. |
+| **Entities** | `Soldier.cs` – player character logic, movement, attacks.<br>`Zombie.cs` – enemy AI, path‑finding, health.<br>`Trap.cs` – trap placement & activation.<br>`GridObject.cs` – representation of a cell in the grid. |
+| **ScriptableObjects** | `PathSO.cs` – reusable path data.<br>`TrapEffectSO.cs` – defines trap behaviour (damage, slow, etc.). |
+| **UI** | `CardSelectionManager.cs` – handles ability‑card selection UI. |
+| **Grid** | `GridNeighborsSetup.cs` – builds neighbour relationships for path‑finding. |
 
-Recipes are data-driven using ScriptableObjects, making them super easy to configure and balance without touching code.
-
-### Monster Intelligence
-
-Each monster carries its own recipe and tracks:
-- How long they've been waiting (patience timer)
-- What cure they specifically need
-- Whether they'll accept a delivery right now
-
-When patience runs out, they automatically transition to the Angry state and may chase the player, creating moments of panic and comedy.
+The architecture follows a **manager‑entity** pattern: each *Manager* owns a collection of related *Entities* and updates them each frame.  Data‑driven behaviour is achieved through ScriptableObjects, allowing designers to tweak values without code changes.
 
 ---
 
-## 📁 Project Structure
+## UML Diagram
+```mermaid
+classDiagram
+    class GameManager {
+        +StartGame()
+        +Update()
+    }
+    class ZombieManager {
+        +SpawnZombie()
+        +UpdateZombies()
+    }
+    class Soldier {
+        +Move()
+        +Attack()
+    }
+    class Zombie {
+        +Chase()
+        +TakeDamage()
+    }
+    class Trap {
+        +Activate()
+        +TriggerEffect()
+    }
+    class GridObject {
+        +IsWalkable
+        +Neighbors[]
+    }
+    class PathSO {
+        +List<Point> points
+    }
+    class TrapEffectSO {
+        +EffectType
+        +Apply()
+    }
+    class CardSelectionManager {
+        +ShowCards()
+        +SelectCard()
+    }
+    class SoundManager {
+        +PlaySound(string)
+    }
+    class Singleton <<interface>> {
+        <<static>> Instance
+    }
 
+    GameManager --> ZombieManager : manages
+    GameManager --> Soldier : controls
+    ZombieManager --> Zombie : spawns
+    Soldier "1" --> "*" GridObject : occupies
+    Zombie "1" --> "*" GridObject : occupies
+    Trap --> GridObject : placed on
+    Trap --> TrapEffectSO : uses
+    Zombie --> PathSO : follows
+    Soldier --> CardSelectionManager : uses
+    SoundManager --> Singleton : inherits
+    ZombieManager --> SoundManager : plays audio
+    GameManager --> SoundManager : plays music
 ```
-Scripts/
-├── Player/                    # Player movement, interaction, inventory, health
-├── Monster/                   # Monster behavior, states, recipes
-│   └── States/               # Individual state classes (Waiting, Angry, Chasing, etc.)
-├── CraftingTable/            # Crafting logic and visuals
-├── Chest/                    # Item storage system
-├── Managers/                 # GameManager, SpawnManager, DeliveryManager, etc.
-├── UI/                       # All UI screens (Main Menu, Pause, Inventory, Health, etc.)
-├── ScriptableObjects/        # Data definitions (Items, Recipes, Sounds)
-├── Interfaces/               # IInteractable interface for player interactions
-└── (Root Level)              # GameIntro, Loader, EventBridge
-```
-
-### Key ScriptableObjects
-
-- **ItemSO** – Base definition for any item (ingredient or cure)
-- **CraftedCureRecipeSO** – Recipe linking ingredients to a finished cure
-- **RecipeListSO** – Database of all available recipes
-- **SoundSO & SoundLibrarySO** – Audio clips organized by type
 
 ---
 
-## ⚙️ How Difficulty Scales
-
-The game gets progressively harder as you succeed:
-
-```
-Monsters Served:  3      6      9      12     15     ...
-Patience:        ↓      ↓      ↓      ↓      ↓     (floors at minPatience)
-Spawn Rate:      ✓      ✓      ✓      ✓      ✓     (floors at minSpawnInterval)
-```
-
-This creates a natural difficulty curve – players feel the pressure mounting without sudden spikes.
-
-### Customizable Settings
-
-In the GameManager inspector, you can tune:
-- **Initial spawn interval** (how often monsters arrive)
-- **Initial monster patience** (how long they wait)
-- **Patience decrease per 3 serves** (how much harder they get)
-- **Spawn rate decrease per 5 serves** (how much faster)
-- **Minimum patience & spawn interval** (soft caps to prevent chaos)
+## Contributing
+Contributions are welcome! Please fork the repository, create a feature branch, and submit a pull request. Follow the existing coding style and test changes in the Unity editor.
 
 ---
 
-## 🎯 Player Flow
-
-### Main Menu
-Simple entry point – Play, Options, or Quit.
-
-### Game Intro
-Brief opening sequence with story/setup. Press interact to skip ahead.
-
-### Gameplay
-- Move around the shop
-- Interact with chests to gather ingredients
-- Approach the crafting table to brew cures
-- Deliver to waiting (or increasingly angry) monsters
-- Watch your health – wrong deliveries or ignored monsters cause damage
-
-### Game Over
-When health reaches zero, the game ends. Your score is displayed based on how many monsters you successfully served.
-
----
-
-## 🎨 UI System
-
-The UI is event-driven and modular:
-
-- **HealthUI** – Displays current health and damage taken
-- **InventoryUI** – Shows carried items and slots
-- **InteractionUI** – Prompts when near interactive objects ("Press E to Craft")
-- **ScoreUI** – Running tally of monsters served
-- **PauseUI** – Menu overlay (pause/resume, options, quit)
-- **GameOverUI** – Final score and retry option
-
-Every UI element listens to events from the game systems, so the logic and display are beautifully separated.
-
----
-
-## 🔧 Technical Highlights
-
-### Design Patterns Used
-
-- **Singleton Pattern** – Managers (GameManager, DeliveryManager, SpawnManager, etc.)
-- **State Machine** – Monster behavior and states
-- **Observer Pattern** – Events for everything (crafting, delivery, game state changes)
-- **Factory/Spawn System** – Dynamic monster spawning
-- **ScriptableObject-Based Data** – All game content (items, recipes, sounds) is configuration, not code
-
-### Event System
-
-The game is heavily event-driven. Key events include:
-- `OnGameOver`, `OnGamePaused`, `OnGameUnpaused`
-- `OnCorrectDelivery`, `OnWrongDelivery`, `OnEmptyDelivery`
-- `OnCraftStarted`, `OnCraftFinished`, `OnItemTaken`
-- `OnMonsterServed`, `OnHealed`
-
-This decoupling makes the code flexible and easy to extend.
-
-### Save System
-
-Progress is persisted using the **SaveManager**, allowing:
-- High score tracking
-- Game state restoration between sessions
-
----
-
-## 📝 License & Credits
-
-Made with ❤️ in Unity. Enjoy the chaos!
-
----
-
-**Happy potion brewing! 🧪✨**
+## License
+This project is provided **without a license** – feel free to use it for personal learning or as a foundation for your own projects.
