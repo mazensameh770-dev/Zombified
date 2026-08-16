@@ -1,6 +1,8 @@
 # Zombified
 
-![Banner](https://media.githubusercontent.com/media/mazensameh770-dev/Zombified/main/Assets/Screenshots/Banner.png)
+<p align="center">
+  <img src="https://media.githubusercontent.com/media/mazensameh770-dev/Zombified/main/Assets/Screenshots/Banner.png" alt="Zombified Banner">
+</p>
 
 **Zombified** is a top‑down, grid‑based zombie‑survival game built with Unity.  Players control a soldier, navigate a procedurally generated grid, and battle waves of zombies while using traps and special abilities.
 
