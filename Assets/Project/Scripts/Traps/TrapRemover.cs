@@ -35,7 +35,7 @@ public class TrapRemover : MonoBehaviour
         {
             GridTile tileState = hit.collider.GetComponent<GridTile>();
 
-            if (tileState != null && tileState.GetCurrentObject() != null)
+            if (tileState != null && tileState.GetCurrentObject() != null && tileState.GetCurrentObject() is Trap)
             {
                 hoveredTileWithTrap = tileState;
                 removeButtonRect.gameObject.SetActive(true);
