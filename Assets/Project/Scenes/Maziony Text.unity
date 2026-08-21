@@ -2586,6 +2586,7 @@ GameObject:
   - component: {fileID: 71341823}
   - component: {fileID: 71341820}
   - component: {fileID: 71341824}
+  - component: {fileID: 71341825}
   m_Layer: 5
   m_Name: PlayButton_Main
   m_TagString: Untagged
@@ -2722,6 +2723,23 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 26939a1b98e2c314b822b916ae893120, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::UIButtonSound
+--- !u!114 &71341825
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 71341818}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bea55025f20643a42a4a22d653f4f964, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::HoverAnimation
+  rotate: 1
+  rotateValue: 3
+  scale: 1
+  scaleValue: 1.1
+  animationTime: 0.3
 --- !u!1 &73511739 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 102002, guid: 4301b7cd2f325054eaa30494925b0c8d, type: 3}
@@ -3869,6 +3887,7 @@ GameObject:
   - component: {fileID: 98430690}
   - component: {fileID: 98430693}
   - component: {fileID: 98430694}
+  - component: {fileID: 98430695}
   m_Layer: 5
   m_Name: Buttonlevel3
   m_TagString: Untagged
@@ -3894,7 +3913,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 960.3324, y: -540}
+  m_AnchoredPosition: {x: 960, y: -540}
   m_SizeDelta: {x: 250, y: 250}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &98430690
@@ -4006,6 +4025,23 @@ MonoBehaviour:
   levelIndex: 2
   filledStar: {fileID: -165506977, guid: f11bf1241657ad64086832943f90e875, type: 3}
   emptyStar: {fileID: -472923817, guid: f11bf1241657ad64086832943f90e875, type: 3}
+--- !u!114 &98430695
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 98430687}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bea55025f20643a42a4a22d653f4f964, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::HoverAnimation
+  rotate: 0
+  rotateValue: 15
+  scale: 1
+  scaleValue: 1.1
+  animationTime: 0.25
 --- !u!1001 &98484342
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -4702,6 +4738,7 @@ GameObject:
   - component: {fileID: 111824546}
   - component: {fileID: 111824543}
   - component: {fileID: 111824547}
+  - component: {fileID: 111824548}
   m_Layer: 5
   m_Name: OptionsButton_Pause
   m_TagString: Untagged
@@ -4838,6 +4875,23 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 26939a1b98e2c314b822b916ae893120, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::UIButtonSound
+--- !u!114 &111824548
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 111824541}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bea55025f20643a42a4a22d653f4f964, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::HoverAnimation
+  rotate: 1
+  rotateValue: 3
+  scale: 1
+  scaleValue: 1.1
+  animationTime: 0.3
 --- !u!4 &112290946 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 456744, guid: 82f6882977329724ca4b934e09af87fc, type: 3}
@@ -4867,6 +4921,7 @@ GameObject:
   - component: {fileID: 117942030}
   - component: {fileID: 117942029}
   - component: {fileID: 117942033}
+  - component: {fileID: 117942034}
   m_Layer: 5
   m_Name: BackButton_Levels
   m_TagString: Untagged
@@ -5003,6 +5058,21 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 26939a1b98e2c314b822b916ae893120, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::UIButtonSound
+--- !u!114 &117942034
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 117942027}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b1165079097e2ef40a3c2ed6058c1b37, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::UIAnimation
+  animationType: 6
+  animationTime: 1
+  delay: 0
 --- !u!4 &121186029 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 482942, guid: 99fcced7ffcbb194997b9d30e80c0c3a, type: 3}
@@ -10032,6 +10102,7 @@ GameObject:
   - component: {fileID: 269792223}
   - component: {fileID: 269792220}
   - component: {fileID: 269792224}
+  - component: {fileID: 269792225}
   m_Layer: 5
   m_Name: OptionsButton_Main
   m_TagString: Untagged
@@ -10168,6 +10239,23 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 26939a1b98e2c314b822b916ae893120, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::UIButtonSound
+--- !u!114 &269792225
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 269792218}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bea55025f20643a42a4a22d653f4f964, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::HoverAnimation
+  rotate: 1
+  rotateValue: 3
+  scale: 1
+  scaleValue: 1.1
+  animationTime: 0.3
 --- !u!1 &271988326
 GameObject:
   m_ObjectHideFlags: 0
@@ -11847,6 +11935,7 @@ GameObject:
   - component: {fileID: 320203785}
   - component: {fileID: 320203787}
   - component: {fileID: 320203790}
+  - component: {fileID: 320203791}
   m_Layer: 5
   m_Name: MainMenuButton_Pause
   m_TagString: Untagged
@@ -11983,6 +12072,23 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 26939a1b98e2c314b822b916ae893120, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::UIButtonSound
+--- !u!114 &320203791
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 320203784}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bea55025f20643a42a4a22d653f4f964, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::HoverAnimation
+  rotate: 1
+  rotateValue: 3
+  scale: 1
+  scaleValue: 1.1
+  animationTime: 0.3
 --- !u!1 &320841047
 GameObject:
   m_ObjectHideFlags: 0
@@ -12773,6 +12879,7 @@ GameObject:
   - component: {fileID: 344129008}
   - component: {fileID: 344129011}
   - component: {fileID: 344129012}
+  - component: {fileID: 344129013}
   m_Layer: 5
   m_Name: Buttonlevel2
   m_TagString: Untagged
@@ -12798,7 +12905,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 576.19946, y: -540}
+  m_AnchoredPosition: {x: 576, y: -540}
   m_SizeDelta: {x: 250, y: 250}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &344129008
@@ -12910,6 +13017,23 @@ MonoBehaviour:
   levelIndex: 1
   filledStar: {fileID: -165506977, guid: f11bf1241657ad64086832943f90e875, type: 3}
   emptyStar: {fileID: -472923817, guid: f11bf1241657ad64086832943f90e875, type: 3}
+--- !u!114 &344129013
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 344129005}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bea55025f20643a42a4a22d653f4f964, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::HoverAnimation
+  rotate: 0
+  rotateValue: 15
+  scale: 1
+  scaleValue: 1.1
+  animationTime: 0.25
 --- !u!1001 &346830596
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -30840,6 +30964,7 @@ GameObject:
   m_Component:
   - component: {fileID: 839104170}
   - component: {fileID: 839104171}
+  - component: {fileID: 839104172}
   m_Layer: 0
   m_Name: Buttons
   m_TagString: Untagged
@@ -30895,6 +31020,21 @@ MonoBehaviour:
   m_ChildScaleWidth: 0
   m_ChildScaleHeight: 0
   m_ReverseArrangement: 0
+--- !u!114 &839104172
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 839104169}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b1165079097e2ef40a3c2ed6058c1b37, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::UIAnimation
+  animationType: 6
+  animationTime: 1
+  delay: 0.5
 --- !u!1 &839443367
 GameObject:
   m_ObjectHideFlags: 0
@@ -31846,6 +31986,7 @@ GameObject:
   - component: {fileID: 855957907}
   - component: {fileID: 855957906}
   - component: {fileID: 855957905}
+  - component: {fileID: 855957908}
   m_Layer: 5
   m_Name: Levels
   m_TagString: Untagged
@@ -31916,7 +32057,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: UnityEngine.UI::UnityEngine.UI.Image
   m_Material: {fileID: 0}
-  m_Color: {r: 0.17075832, g: 0.8113208, b: 0.14542533, a: 0.27450982}
+  m_Color: {r: 0.17075832, g: 0.8113208, b: 0.14542533, a: 0}
   m_RaycastTarget: 1
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
@@ -31941,6 +32082,21 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 855957903}
   m_CullTransparentMesh: 1
+--- !u!114 &855957908
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 855957903}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b1165079097e2ef40a3c2ed6058c1b37, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::UIAnimation
+  animationType: 3
+  animationTime: 1
+  delay: 0.5
 --- !u!1 &856223187
 GameObject:
   m_ObjectHideFlags: 0
@@ -41632,6 +41788,7 @@ GameObject:
   - component: {fileID: 1085092373}
   - component: {fileID: 1085092370}
   - component: {fileID: 1085092374}
+  - component: {fileID: 1085092375}
   m_Layer: 5
   m_Name: ResumeButton_Pause
   m_TagString: Untagged
@@ -41780,6 +41937,23 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 26939a1b98e2c314b822b916ae893120, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::UIButtonSound
+--- !u!114 &1085092375
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1085092368}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bea55025f20643a42a4a22d653f4f964, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::HoverAnimation
+  rotate: 1
+  rotateValue: 3
+  scale: 1
+  scaleValue: 1.1
+  animationTime: 0.3
 --- !u!1 &1085197970
 GameObject:
   m_ObjectHideFlags: 0
@@ -47074,6 +47248,7 @@ GameObject:
   - component: {fileID: 1272158325}
   - component: {fileID: 1272158328}
   - component: {fileID: 1272158329}
+  - component: {fileID: 1272158330}
   m_Layer: 5
   m_Name: Buttonlevel1
   m_TagString: Untagged
@@ -47090,7 +47265,7 @@ RectTransform:
   m_GameObject: {fileID: 1272158323}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1.25, y: 1.25, z: 1.25}
+  m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 1
   m_Children:
   - {fileID: 405261547}
@@ -47099,7 +47274,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 192.06648, y: -540}
+  m_AnchoredPosition: {x: 192, y: -540}
   m_SizeDelta: {x: 250, y: 250}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1272158325
@@ -47211,6 +47386,23 @@ MonoBehaviour:
   levelIndex: 0
   filledStar: {fileID: -165506977, guid: f11bf1241657ad64086832943f90e875, type: 3}
   emptyStar: {fileID: -472923817, guid: f11bf1241657ad64086832943f90e875, type: 3}
+--- !u!114 &1272158330
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1272158323}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bea55025f20643a42a4a22d653f4f964, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::HoverAnimation
+  rotate: 0
+  rotateValue: 15
+  scale: 1
+  scaleValue: 1.1
+  animationTime: 0.25
 --- !u!1 &1273591466
 GameObject:
   m_ObjectHideFlags: 0
@@ -48897,6 +49089,7 @@ GameObject:
   - component: {fileID: 1316947179}
   - component: {fileID: 1316947178}
   - component: {fileID: 1316947177}
+  - component: {fileID: 1316947181}
   m_Layer: 5
   m_Name: OptionsUI
   m_TagString: Untagged
@@ -48970,6 +49163,21 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
+--- !u!114 &1316947181
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1316947176}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b1165079097e2ef40a3c2ed6058c1b37, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::UIAnimation
+  animationType: 1
+  animationTime: 0.5
+  delay: 0
 --- !u!1 &1317694294
 GameObject:
   m_ObjectHideFlags: 0
@@ -55135,6 +55343,7 @@ GameObject:
   - component: {fileID: 1491542361}
   - component: {fileID: 1491542363}
   - component: {fileID: 1491542362}
+  - component: {fileID: 1491542364}
   m_Layer: 5
   m_Name: LevelsText
   m_TagString: Untagged
@@ -55263,6 +55472,21 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1491542360}
   m_CullTransparentMesh: 1
+--- !u!114 &1491542364
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1491542360}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b1165079097e2ef40a3c2ed6058c1b37, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::UIAnimation
+  animationType: 5
+  animationTime: 1
+  delay: 0
 --- !u!1001 &1491923582
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -59411,6 +59635,7 @@ GameObject:
   - component: {fileID: 1609297286}
   - component: {fileID: 1609297289}
   - component: {fileID: 1609297290}
+  - component: {fileID: 1609297291}
   m_Layer: 5
   m_Name: Buttonlevel5
   m_TagString: Untagged
@@ -59436,7 +59661,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 1728.5984, y: -540}
+  m_AnchoredPosition: {x: 1728, y: -540}
   m_SizeDelta: {x: 250, y: 250}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1609297286
@@ -59548,6 +59773,23 @@ MonoBehaviour:
   levelIndex: 4
   filledStar: {fileID: -165506977, guid: f11bf1241657ad64086832943f90e875, type: 3}
   emptyStar: {fileID: -472923817, guid: f11bf1241657ad64086832943f90e875, type: 3}
+--- !u!114 &1609297291
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1609297283}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bea55025f20643a42a4a22d653f4f964, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::HoverAnimation
+  rotate: 0
+  rotateValue: 15
+  scale: 1
+  scaleValue: 1.1
+  animationTime: 0.25
 --- !u!1 &1610014290
 GameObject:
   m_ObjectHideFlags: 0
@@ -67747,6 +67989,7 @@ GameObject:
   - component: {fileID: 1814542161}
   - component: {fileID: 1814542164}
   - component: {fileID: 1814542165}
+  - component: {fileID: 1814542166}
   m_Layer: 5
   m_Name: Buttonlevel4
   m_TagString: Untagged
@@ -67772,7 +68015,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 1344.4655, y: -540}
+  m_AnchoredPosition: {x: 1344, y: -540}
   m_SizeDelta: {x: 250, y: 250}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1814542161
@@ -67884,6 +68127,23 @@ MonoBehaviour:
   levelIndex: 3
   filledStar: {fileID: -165506977, guid: f11bf1241657ad64086832943f90e875, type: 3}
   emptyStar: {fileID: -472923817, guid: f11bf1241657ad64086832943f90e875, type: 3}
+--- !u!114 &1814542166
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1814542158}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bea55025f20643a42a4a22d653f4f964, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::HoverAnimation
+  rotate: 0
+  rotateValue: 15
+  scale: 1
+  scaleValue: 1.1
+  animationTime: 0.25
 --- !u!1 &1814619394
 GameObject:
   m_ObjectHideFlags: 0
@@ -71290,6 +71550,7 @@ GameObject:
   - component: {fileID: 1894003459}
   - component: {fileID: 1894003461}
   - component: {fileID: 1894003464}
+  - component: {fileID: 1894003465}
   m_Layer: 5
   m_Name: QuitButton_Main
   m_TagString: Untagged
@@ -71426,6 +71687,23 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 26939a1b98e2c314b822b916ae893120, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::UIButtonSound
+--- !u!114 &1894003465
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1894003458}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bea55025f20643a42a4a22d653f4f964, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::HoverAnimation
+  rotate: 1
+  rotateValue: 3
+  scale: 1
+  scaleValue: 1.1
+  animationTime: 0.3
 --- !u!1 &1894322993 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 102002, guid: 4301b7cd2f325054eaa30494925b0c8d, type: 3}
@@ -74790,6 +75068,7 @@ GameObject:
   - component: {fileID: 1979553525}
   - component: {fileID: 1979553524}
   - component: {fileID: 1979553523}
+  - component: {fileID: 1979553526}
   m_Layer: 5
   m_Name: Logo
   m_TagString: Untagged
@@ -74869,6 +75148,21 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1979553521}
   m_CullTransparentMesh: 1
+--- !u!114 &1979553526
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1979553521}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b1165079097e2ef40a3c2ed6058c1b37, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::UIAnimation
+  animationType: 2
+  animationTime: 1
+  delay: 0
 --- !u!4 &1982015955 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: f96e162e12f2209418d5f4e934644af9, type: 3}
