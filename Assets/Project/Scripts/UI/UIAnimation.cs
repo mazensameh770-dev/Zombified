@@ -38,10 +38,10 @@ public class UIAnimation : MonoBehaviour
     }
 
     private void Scale(bool up) {
-        Vector3 starting = up ? Vector3.one : Vector3.zero;
+        Vector3 starting = up ? Vector3.zero : Vector3.one;
         Vector3 ending = up ? Vector3.one : Vector3.zero;
         transform.DOScale(ending, animationTime)
-            .From(starting).SetEase(Ease.OutBack).SetDelay(delay);
+            .From(starting).SetEase(Ease.OutExpo).SetDelay(delay).SetUpdate(true);
     }
     private void Slide(Vector2 direction) {
         Vector2 originalPosition = rectTransform.localPosition;
@@ -56,7 +56,7 @@ public class UIAnimation : MonoBehaviour
         }
 
         rectTransform.DOLocalMove(originalPosition, animationTime).From(StartingPosition)
-            .SetEase(Ease.OutCubic).SetDelay(delay);
+            .SetEase(Ease.OutCubic).SetDelay(delay).SetUpdate(true);
     }
     private void OnDisable() {
         transform.DOKill();

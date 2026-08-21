@@ -18,10 +18,10 @@ public class HoverAnimation : MonoBehaviour, IPointerEnterHandler, IPointerExitH
     public void OnPointerEnter(PointerEventData eventData) {
         if (button != null && !button.interactable) return;
         if (rotate) {
-            transform.DORotate(rotationAmount, animationTime).SetEase(Ease.OutBack);
+            transform.DORotate(rotationAmount, animationTime).SetEase(Ease.OutBack).SetUpdate(true);
         }
         if (scale) {
-            transform.DOScale(transform.localScale * scaleValue, animationTime).SetEase(Ease.InOutQuad);
+            transform.DOScale(transform.localScale * scaleValue, animationTime).SetEase(Ease.InOutQuad).SetUpdate(true);
         }
     }
     private void OnDisable() {
@@ -31,10 +31,10 @@ public class HoverAnimation : MonoBehaviour, IPointerEnterHandler, IPointerExitH
     public void OnPointerExit(PointerEventData eventData) {
         if (button != null && !button.interactable) return;
         if (rotate) {
-            transform.DORotate(Vector3.zero, animationTime).SetEase(Ease.OutBack);
+            transform.DORotate(Vector3.zero, animationTime).SetEase(Ease.OutBack).SetUpdate(true);
         }
         if (scale) {
-            transform.DOScale(Vector3.one, animationTime).SetEase(Ease.InOutQuad);
+            transform.DOScale(Vector3.one, animationTime).SetEase(Ease.InOutQuad).SetUpdate(true);
         }
     }
 }
