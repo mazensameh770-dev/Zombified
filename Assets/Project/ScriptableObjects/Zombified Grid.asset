@@ -12,5 +12,5 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 29c9a0f9d30abce40ac531b602b3b5d3, type: 3}
   m_Name: Zombified Grid
   m_EditorClassIdentifier: Assembly-CSharp::TrapCardData
-  trapName: Zombified_Grid
+  trapName: Zombifiy
   trapPrefab: {fileID: 4782773506508070919, guid: b418b884270d6f24197a77ea678525fc, type: 3}

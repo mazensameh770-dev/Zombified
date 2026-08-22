@@ -96,6 +96,7 @@ public class TrapPlacementController : MonoBehaviour
                     if (existingObj is Trap trap)
                     {
                         tile.RemoveObject(true);
+                        SoundManager.Instance.PlayTrapRemove();
                         Destroy(trap.gameObject);
                     }
                 }

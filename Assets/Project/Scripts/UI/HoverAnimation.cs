@@ -15,6 +15,13 @@ public class HoverAnimation : MonoBehaviour, IPointerEnterHandler, IPointerExitH
         button = GetComponent<Button>();
         rotationAmount = new Vector3(0, 0, rotateValue);
     }
+
+    private void OnEnable() {
+        if (button != null) {
+            transform.localScale = Vector3.one;
+            transform.localRotation = Quaternion.identity;
+        }
+    }
     public void OnPointerEnter(PointerEventData eventData) {
         if (button != null && !button.interactable) return;
         if (rotate) {
@@ -25,6 +32,7 @@ public class HoverAnimation : MonoBehaviour, IPointerEnterHandler, IPointerExitH
         }
     }
     private void OnDisable() {
+
         transform.DOKill();
     }
 
