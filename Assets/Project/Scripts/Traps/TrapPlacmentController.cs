@@ -13,6 +13,12 @@ public class TrapPlacementController : MonoBehaviour
     private GameObject ghostInstance;
     private Transform currentHoveredTile;
 
+    [Header("Range Highlight")]
+    [SerializeField] private Color rangeHighlightColor = new Color(1f, 0.5f, 0f, 0.35f);
+    private readonly List<GameObject> rangeOverlays = new List<GameObject>();
+    private GridTile lastHighlightedTile;
+    private int selectedTrapRange;
+
     private readonly List<IPlacementRule> placementRules = new List<IPlacementRule>();
 
     private void Awake()
@@ -31,6 +37,7 @@ public class TrapPlacementController : MonoBehaviour
     {
         if (CardSelectionManager.Instance != null)
             CardSelectionManager.Instance.OnCardSelected -= HandleCardSelected;
+        ClearRangeHighlight();
     }
 
     private void HandleCardSelected(TrapCardData trapData)
@@ -39,12 +46,16 @@ public class TrapPlacementController : MonoBehaviour
 
         if (ghostInstance != null) Destroy(ghostInstance);
         currentHoveredTile = null;
+        ClearRangeHighlight();
 
         if (selectedTrapData != null)
         {
             ghostInstance = Instantiate(selectedTrapData.trapPrefab);
             ghostInstance.transform.localScale = selectedTrapData.trapPrefab.transform.localScale * ghostScale;
             ApplyGhostLook(ghostInstance);
+
+            GridObject trapGridObj = selectedTrapData.trapPrefab.GetComponent<GridObject>();
+            selectedTrapRange = trapGridObj != null ? trapGridObj.getRange() : 0;
         }
     }
 
@@ -66,6 +77,11 @@ public class TrapPlacementController : MonoBehaviour
                 ghostInstance.transform.position = GetTileCenter(currentHoveredTile);
                 SnapToTileSurface(ghostInstance, GetTileCenter(currentHoveredTile));
 
+                if (tileState != lastHighlightedTile)
+                {
+                    ShowRangeHighlight(tileState);
+                }
+
                 if (Input.GetMouseButtonDown(0))
                 {
                     if (IsPlacementValid(tileState))
@@ -79,6 +95,7 @@ public class TrapPlacementController : MonoBehaviour
         {
             currentHoveredTile = null;
             ghostInstance.SetActive(false);
+            ClearRangeHighlight();
         }
     }
 
@@ -150,7 +167,9 @@ public class TrapPlacementController : MonoBehaviour
         Trap trapComponent = placedTrap.GetComponent<Trap>();
         trapComponent?.SetSourceCardData(selectedTrapData);
 
+        SoundManager.Instance.PlayTrapPlace();
         CardSelectionManager.Instance.NotifyTrapPlaced();
+        ClearRangeHighlight();
     }
 
     private Vector3 GetTileCenter(Transform tile)
@@ -199,4 +218,58 @@ public class TrapPlacementController : MonoBehaviour
             renderer.materials = ghostMaterials;
         }
     }
+
+    #region Range Highlight
+
+    private void ShowRangeHighlight(GridTile tile)
+    {
+        ClearRangeHighlight();
+        lastHighlightedTile = tile;
+
+        if (tile == null || selectedTrapRange <= 0) return;
+
+        Queue<GridTile> tilesInRange = new Queue<GridTile>();
+        GridObject.StartSearching(tile, selectedTrapRange, t => tilesInRange.Enqueue(t));
+
+        while (tilesInRange.Count > 0)
+        {
+            GridTile t = tilesInRange.Dequeue();
+            GameObject overlay = CreateOverlayOnTile(t);
+            rangeOverlays.Add(overlay);
+        }
+    }
+
+    private void ClearRangeHighlight()
+    {
+        foreach (GameObject overlay in rangeOverlays)
+        {
+            if (overlay != null) Destroy(overlay);
+        }
+        rangeOverlays.Clear();
+        lastHighlightedTile = null;
+    }
+
+    private GameObject CreateOverlayOnTile(GridTile tile)
+    {
+        GameObject quad = GameObject.CreatePrimitive(PrimitiveType.Quad);
+        quad.name = "TrapRangeOverlay";
+        quad.transform.rotation = Quaternion.Euler(90f, 0f, 0f);
+
+        Destroy(quad.GetComponent<Collider>());
+
+        Material mat = new Material(Shader.Find("Sprites/Default"));
+        mat.color = rangeHighlightColor;
+        quad.GetComponent<Renderer>().material = mat;
+
+        Renderer tileRenderer = tile.GetComponent<Renderer>();
+        Vector3 pos = tileRenderer != null
+            ? new Vector3(tileRenderer.bounds.center.x, tileRenderer.bounds.max.y + 0.01f, tileRenderer.bounds.center.z)
+            : tile.transform.position + Vector3.up * 0.01f;
+
+        quad.transform.position = pos;
+
+        return quad;
+    }
+
+    #endregion
 }

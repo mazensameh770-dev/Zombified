@@ -895,7 +895,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 89fd750191d309145b5c239803c839ba, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Trap
-  range: 3
+  range: 2
   trapEffect: {fileID: 11400000, guid: a2cb506a4141d3746b44e977a2fe6b7f, type: 2}
   blocksSoldier: 1
   soldierWarningMessage: You cannot place the barrel in the soldier's path!!

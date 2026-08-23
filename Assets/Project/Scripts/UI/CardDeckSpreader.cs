@@ -29,6 +29,7 @@ public class CardDeckSpreader : MonoBehaviour
 
     public void PlayFanReveal()
     {
+        SoundManager.Instance.PlayCardShuffle();
         StopAllCoroutines();
         SetInitialFanPose();
         StartCoroutine(SpreadRoutine());

@@ -1,5 +1,5 @@
+using System.Collections;
 using DG.Tweening;
-using System.Threading.Tasks;
 using UnityEngine;
 
 public class Zombie : GridObject
@@ -7,8 +7,19 @@ public class Zombie : GridObject
     [Header("Zombie Settings")]
     [SerializeField] private Animator animator;
     private GridTile target = null;
-    private int health = 4;
+    [SerializeField] private int maxHealth = 4;
+    private int currentHealth;
     private bool canMove = true;
+
+    public int CurrentHealth => currentHealth;
+    public int MaxHealth => maxHealth;
+
+    public event System.Action<int, int> OnHealthChanged;
+
+    private void Awake()
+    {
+        currentHealth = maxHealth;
+    }
 
     protected override void PlayNextAction()
     {
@@ -31,6 +42,8 @@ public class Zombie : GridObject
     protected override void ResetObject()
     {
         transform.DOKill();
+        currentHealth = maxHealth;
+        OnHealthChanged?.Invoke(currentHealth, maxHealth);
         if (currentGridTile != null)
         {
             currentGridTile.RemoveObject();
@@ -44,8 +57,9 @@ public class Zombie : GridObject
 
     public override void TakeDamage(int damage)
     {
-        health -= damage;
-        if (health <= 0)
+        currentHealth -= damage;
+        OnHealthChanged?.Invoke(currentHealth, maxHealth);
+        if (currentHealth <= 0)
         {
             die();
         }
@@ -54,10 +68,15 @@ public class Zombie : GridObject
     private void die()
     {
         canMove = false;
+        if (currentGridTile != null)
+        {
+            currentGridTile.RemoveObject(false);
+        }
         if (animator != null)
         {
             animator.SetTrigger("die");
         }
+        Destroy(gameObject, 2f);
     }
 
     private void CheckingDirection()
@@ -94,12 +113,17 @@ public class Zombie : GridObject
         Moving(targetedTile);
     }
 
-    private async void Moving(GridTile targetTile)
+    private void Moving(GridTile targetTile)
+    {
+        StartCoroutine(MovingRoutine(targetTile));
+    }
+
+    private IEnumerator MovingRoutine(GridTile targetTile)
     {
         if (animator != null) animator.SetBool("walk", true);
         currentGridTile.MoveObject(targetTile);
 
-        await Task.Delay(500);
+        yield return new WaitForSeconds(0.5f);
 
         if (this != null && gameObject != null && animator != null)
         {

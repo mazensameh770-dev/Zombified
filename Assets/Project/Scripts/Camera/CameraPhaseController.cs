@@ -45,7 +45,21 @@ public class CameraPhaseController : MonoBehaviour
     private Vector3 homePosition;
     private Quaternion homeRotation;
 
-    public static bool IsInSetupPhase { get; private set; }
+    public static event Action<bool> OnSetupPhaseChanged;
+
+    private static bool _isInSetupPhase;
+    public static bool IsInSetupPhase
+    {
+        get => _isInSetupPhase;
+        private set
+        {
+            if (_isInSetupPhase != value)
+            {
+                _isInSetupPhase = value;
+                OnSetupPhaseChanged?.Invoke(value);
+            }
+        }
+    }
     public int CurrentLevelIndex => currentLevelIndex;
 
     private LevelViewpoints CurrentLevel => levels[currentLevelIndex];

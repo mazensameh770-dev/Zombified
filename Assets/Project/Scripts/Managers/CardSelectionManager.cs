@@ -81,6 +81,7 @@ public class CardSelectionManager : Singleton<CardSelectionManager>
 
         if (selectedCard != null) selectedCard.SetSelected(false);
 
+        SoundManager.Instance.PlayCardClicked();
         selectedCard = card;
         selectedCard.SetSelected(true);
         OnCardSelected?.Invoke(card.TrapData);

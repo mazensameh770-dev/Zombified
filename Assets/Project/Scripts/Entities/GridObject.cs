@@ -96,4 +96,11 @@ public abstract class GridObject : MonoBehaviour
             if (left != null) queue.Enqueue((left, nextRange));
         }
     }
+
+    public Queue<GridTile> GetTilesInRange(GridTile startTile, int range)
+    {
+        var tilesInRange = new Queue<GridTile>();
+        StartSearching(startTile, range, tile => tilesInRange.Enqueue(tile));
+        return tilesInRange;
+    }
 }

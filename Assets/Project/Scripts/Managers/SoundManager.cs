@@ -17,6 +17,8 @@ public class SoundManager : MonoBehaviour
     [SerializeField] private AudioClip trapRemoveClip;
     [SerializeField] private AudioClip trapClearClip;
     [SerializeField] private AudioClip winClip;
+    [SerializeField] private AudioClip cardShuffleClip;
+    [SerializeField] private AudioClip cardClickedClip;
 
     private const string BackgroundVolumeKey = "BackgroundVolume";
     private const string SFXVolumeKey = "SFXVolume";
@@ -68,6 +70,16 @@ public class SoundManager : MonoBehaviour
     public float GetSFXVolume()
     {
         return sfxSource.volume;
+    }
+
+    public void PlayCardShuffle()
+    {
+        sfxSource.PlayOneShot(cardShuffleClip);
+    }
+
+    public void PlayCardClicked()
+    {
+        sfxSource.PlayOneShot(cardClickedClip);
     }
 
     public void PlayButtonHover()
