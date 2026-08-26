@@ -28,6 +28,7 @@ public class HoverAnimation : MonoBehaviour, IPointerEnterHandler, IPointerExitH
     }
 
     public void OnPointerEnter(PointerEventData eventData) {
+        if (Application.isMobilePlatform) return;
         if (button != null && !button.interactable) return;
 
         transform.DOKill();
@@ -45,6 +46,7 @@ public class HoverAnimation : MonoBehaviour, IPointerEnterHandler, IPointerExitH
     }
 
     public void OnPointerExit(PointerEventData eventData) {
+        if (Application.isMobilePlatform) return;
         if (button != null && !button.interactable) return;
 
         transform.DOKill();

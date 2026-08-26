@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.EventSystems;
 
 public class TrapPlacementController : MonoBehaviour
 {
@@ -59,17 +60,82 @@ public class TrapPlacementController : MonoBehaviour
         }
     }
 
+    private bool touchStartedOnUI;
+
     private void Update()
     {
         HandleTrapRemoval();
 
         if (selectedTrapData == null || ghostInstance == null) return;
 
-        Ray ray = placementCamera.ScreenPointToRay(Input.mousePosition);
-
-        if (Physics.Raycast(ray, out RaycastHit hit, 200f, gridLayerMask))
+        // --- Mobile Touch Handling ---
+        if (Input.touchCount > 0)
         {
-            GridTile tileState = GetTileFromHit(hit);
+            Touch touch = Input.GetTouch(0);
+
+            if (touch.phase == TouchPhase.Began)
+            {
+                touchStartedOnUI = IsPointerOverUI();
+            }
+
+            if (touchStartedOnUI)
+            {
+                if (touch.phase == TouchPhase.Ended || touch.phase == TouchPhase.Canceled)
+                {
+                    touchStartedOnUI = false;
+                }
+                return;
+            }
+
+            Ray ray = placementCamera.ScreenPointToRay(touch.position);
+
+            if (Physics.Raycast(ray, out RaycastHit hit, 200f, gridLayerMask))
+            {
+                GridTile tileState = GetTileFromHit(hit);
+                if (tileState != null)
+                {
+                    currentHoveredTile = tileState.transform;
+                    ghostInstance.SetActive(true);
+                    ghostInstance.transform.position = GetTileCenter(currentHoveredTile);
+                    SnapToTileSurface(ghostInstance, GetTileCenter(currentHoveredTile));
+
+                    if (tileState != lastHighlightedTile)
+                    {
+                        ShowRangeHighlight(tileState);
+                    }
+
+                    // Place trap when releasing finger on a valid tile
+                    if (touch.phase == TouchPhase.Ended)
+                    {
+                        if (IsPlacementValid(tileState))
+                        {
+                            PlaceTrapOnCurrentTile();
+                        }
+                    }
+                }
+            }
+            else
+            {
+                currentHoveredTile = null;
+                ghostInstance.SetActive(false);
+                ClearRangeHighlight();
+            }
+
+            if (touch.phase == TouchPhase.Ended || touch.phase == TouchPhase.Canceled)
+            {
+                touchStartedOnUI = false;
+            }
+            return;
+        }
+
+        // --- PC Mouse Handling ---
+        if (IsPointerOverUI()) return;
+
+        Ray mouseRay = placementCamera.ScreenPointToRay(Input.mousePosition);
+
+        if (Physics.Raycast(mouseRay, out RaycastHit mouseHit, 200f, gridLayerMask))
+        {
+            GridTile tileState = GetTileFromHit(mouseHit);
             if (tileState != null)
             {
                 currentHoveredTile = tileState.transform;
@@ -103,6 +169,8 @@ public class TrapPlacementController : MonoBehaviour
     {
         if (Input.GetMouseButtonDown(1))
         {
+            if (IsPointerOverUI()) return;
+
             Ray ray = placementCamera.ScreenPointToRay(Input.mousePosition);
             if (Physics.Raycast(ray, out RaycastHit hit, 200f, gridLayerMask))
             {
@@ -119,6 +187,18 @@ public class TrapPlacementController : MonoBehaviour
                 }
             }
         }
+    }
+
+    private bool IsPointerOverUI()
+    {
+        if (EventSystem.current == null) return false;
+
+        if (Input.touchCount > 0)
+        {
+            return EventSystem.current.IsPointerOverGameObject(Input.GetTouch(0).fingerId);
+        }
+
+        return EventSystem.current.IsPointerOverGameObject();
     }
 
     private GridTile GetTileFromHit(RaycastHit hit)

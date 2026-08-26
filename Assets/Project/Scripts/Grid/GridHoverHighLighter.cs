@@ -45,7 +45,30 @@ public class GridHoverHighlighter : MonoBehaviour
             return;
         }
 
-        Ray ray = gridCamera.ScreenPointToRay(Input.mousePosition);
+        // On mobile, only highlight when the screen is being touched
+        if (Application.isMobilePlatform && Input.touchCount == 0)
+        {
+            overlay.gameObject.SetActive(false);
+            return;
+        }
+
+        // Hide overlay if pointer is over UI
+        if (UnityEngine.EventSystems.EventSystem.current != null)
+        {
+            if (Input.touchCount > 0 && UnityEngine.EventSystems.EventSystem.current.IsPointerOverGameObject(Input.GetTouch(0).fingerId))
+            {
+                overlay.gameObject.SetActive(false);
+                return;
+            }
+            else if (Input.touchCount == 0 && UnityEngine.EventSystems.EventSystem.current.IsPointerOverGameObject())
+            {
+                overlay.gameObject.SetActive(false);
+                return;
+            }
+        }
+
+        Vector3 pointerPosition = Input.touchCount > 0 ? (Vector3)Input.GetTouch(0).position : Input.mousePosition;
+        Ray ray = gridCamera.ScreenPointToRay(pointerPosition);
 
         if (Physics.Raycast(ray, out RaycastHit hit, 200f, gridLayerMask))
         {

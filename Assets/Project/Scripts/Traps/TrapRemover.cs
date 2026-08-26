@@ -27,9 +27,13 @@ public class TrapRemover : MonoBehaviour
             return;
         }
 
-        if (!Input.GetMouseButtonDown(0)) return;
+        bool isInputTriggered = Input.GetMouseButtonDown(0) || (Input.touchCount > 0 && Input.GetTouch(0).phase == TouchPhase.Began);
+        if (!isInputTriggered) return;
 
-        Ray ray = placementCamera.ScreenPointToRay(Input.mousePosition);
+        if (IsPointerOverUI()) return;
+
+        Vector3 inputPos = Input.touchCount > 0 ? (Vector3)Input.GetTouch(0).position : Input.mousePosition;
+        Ray ray = placementCamera.ScreenPointToRay(inputPos);
 
         if (Physics.Raycast(ray, out RaycastHit hit, 200f, gridLayerMask))
         {
@@ -41,6 +45,18 @@ public class TrapRemover : MonoBehaviour
                 removeButtonRect.gameObject.SetActive(true);
             }
         }
+    }
+
+    private bool IsPointerOverUI()
+    {
+        if (UnityEngine.EventSystems.EventSystem.current == null) return false;
+
+        if (Input.touchCount > 0)
+        {
+            return UnityEngine.EventSystems.EventSystem.current.IsPointerOverGameObject(Input.GetTouch(0).fingerId);
+        }
+
+        return UnityEngine.EventSystems.EventSystem.current.IsPointerOverGameObject();
     }
 
     private void HideButton()

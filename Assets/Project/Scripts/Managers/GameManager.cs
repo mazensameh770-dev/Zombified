@@ -26,10 +26,35 @@ public class GameManager : MonoBehaviour
 
     private bool checksum = true;
 
+    [RuntimeInitializeOnLoadMethod(RuntimeInitializeLoadType.BeforeSceneLoad)]
+    private static void ForceLandscapeOrientationAtBoot()
+    {
+        Application.targetFrameRate = 60;
+        Screen.autorotateToPortrait = false;
+        Screen.autorotateToPortraitUpsideDown = false;
+        Screen.autorotateToLandscapeLeft = true;
+        Screen.autorotateToLandscapeRight = true;
+        Screen.orientation = ScreenOrientation.LandscapeLeft;
+    }
+
     private void Awake()
     {
-        if (Instance == null) Instance = this;
-        else Destroy(this.gameObject);
+        if (Instance == null)
+        {
+            Instance = this;
+            Application.targetFrameRate = 60;
+
+            // Immediately force LandscapeLeft (never portrait / lengthwise)
+            Screen.autorotateToPortrait = false;
+            Screen.autorotateToPortraitUpsideDown = false;
+            Screen.autorotateToLandscapeLeft = true;
+            Screen.autorotateToLandscapeRight = true;
+            Screen.orientation = ScreenOrientation.LandscapeLeft;
+        }
+        else
+        {
+            Destroy(this.gameObject);
+        }
     }
 
     public void SetCurrentLevel(int levelIndex)

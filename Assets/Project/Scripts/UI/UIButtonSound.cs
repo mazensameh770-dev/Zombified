@@ -14,6 +14,7 @@ public class UIButtonSound : MonoBehaviour, IPointerEnterHandler
 
     public void OnPointerEnter(PointerEventData eventData)
     {
+        if (Application.isMobilePlatform) return;
         if (button != null && !button.interactable) return;
         SoundManager.Instance.PlayButtonHover();
     }
